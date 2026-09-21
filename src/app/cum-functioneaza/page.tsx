@@ -5,27 +5,27 @@ import { SiteShell } from "@/components/SiteShell";
 export const metadata: Metadata = {
   title: "Cum funcționează — QuantNode",
   description:
-    "Conectare la broker reglementat, activare agent prin API fără drept de retragere, monitorizare în panoul de control.",
+    "Boți de tranzacții automate pe Binance, XTB și Plus500, pe date de piață la microsecundă, cu dashboard și retragere în maxim 24 de ore.",
 };
 
 const steps = [
   {
     n: "01",
-    title: "Conectezi contul la un broker reglementat",
-    body: "QuantNode nu deschide conturi de tranzacționare și nu preia fonduri. Conexiunea se face către un broker sau un venue deja reglementat, ales de dumneavoastră. Capitalul rămâne unde este astăzi.",
-    points: ["Fără custodie de active", "Contul rămâne pe numele operatorului", "Onboarding pe venue-ul existent"],
+    title: "Tranzacționăm pe platformele majore",
+    body: "Execuția se face pe Binance, XTB și Plus500, prin boți de tranzacții automate. Variațiile de profit se situează între 4% și 40%. Performanțele anterioare nu sunt o garanție pentru rezultate viitoare.",
+    points: ["Binance, XTB, Plus500", "Boți de tranzacții automate", "Variații de profit 4–40%"],
   },
   {
     n: "02",
-    title: "Activezi agentul prin API securizat",
-    body: "Cheile de acces sunt emise cu permisiuni stricte de trading. Nu există drepturi de retragere. Politicile de risc — inclusiv Stop-Loss și plafoane de notional — pot fi impuse la nivel de infrastructură, înainte de execuție.",
-    points: ["Scope trade:read / trade:write", "Fără withdraw", "Limite de risc configurabile"],
+    title: "Decizii pe date la microsecundă",
+    body: "Boții de tranzacționare se bazează pe informații la microsecundă, din surse de încredere, despre evenimente și știri care influențează prețurile și fluctuațiile de piață.",
+    points: ["Latență la microsecundă", "Surse de încredere", "Evenimente și știri de piață"],
   },
   {
     n: "03",
-    title: "Monitorizezi execuția din panoul de control",
-    body: "Jurnale de ordine, starea agenților, latență și alerte operaționale rămân vizibile în dashboard. Intervenția umană este oricând posibilă prin API sau UI: pauză, revocare cheie, ajustare de risc.",
-    points: ["Audit al ordinelor", "Alerte operaționale", "Control uman în orice moment"],
+    title: "Dashboard activ și control asupra fondurilor",
+    body: "Ai un dashboard activ, control asupra finanțelor și retragere în maxim 24 de ore în contul tău.",
+    points: ["Dashboard activ", "Control asupra finanțelor", "Retragere în maxim 24 de ore"],
   },
 ];
 
@@ -38,8 +38,8 @@ export default function HowItWorksPage() {
           <p className="text-xs tracking-wide text-accent uppercase">Operațiuni</p>
           <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl">Cum funcționează</h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-muted">
-            Un flux scurt, auditabil, gândit pentru echipe care au deja un proces de risc și un broker.
-            QuantNode orchestrează execuția. Nu administrează capitalul.
+            Boți de execuție pe Binance, XTB și Plus500, alimentați de date de piață, cu un dashboard din
+            care controlezi activitatea și retragerile.
           </p>
         </div>
       </section>
@@ -70,15 +70,21 @@ export default function HowItWorksPage() {
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           <article className="rounded-xl border border-white/8 bg-panel-2 p-5">
             <h3 className="text-sm font-medium">Ce furnizăm</h3>
-            <p className="mt-2 text-sm leading-6 text-muted">Software SaaS: conectare, execuție, observabilitate.</p>
+            <p className="mt-2 text-sm leading-6 text-muted">
+              Automatizare pe venue-uri majore, date de piață și un panou de control pentru execuție și fonduri.
+            </p>
           </article>
           <article className="rounded-xl border border-white/8 bg-panel-2 p-5">
             <h3 className="text-sm font-medium">Ce nu facem</h3>
-            <p className="mt-2 text-sm leading-6 text-muted">Nu deținem fonduri, nu dăm sfaturi de investiții, nu gestionăm portofolii.</p>
+            <p className="mt-2 text-sm leading-6 text-muted">
+              Nu deschidem tranzacții care nu se încadrează în limitele impuse de utilizator.
+            </p>
           </article>
           <article className="rounded-xl border border-white/8 bg-panel-2 p-5">
             <h3 className="text-sm font-medium">Risc</h3>
-            <p className="mt-2 text-sm leading-6 text-muted">Stop-Loss și limitele de expunere sunt cerințe de sistem, nu opțiuni de marketing.</p>
+            <p className="mt-2 text-sm leading-6 text-muted">
+              Tranzacționarea implică risc de pierdere. Limitele tale rămân regula de execuție.
+            </p>
           </article>
         </div>
 

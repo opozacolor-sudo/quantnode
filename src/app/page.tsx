@@ -15,7 +15,7 @@ export default function Home() {
             <p className="font-mono text-xs text-accent">01</p>
             <h2 className="mt-3 text-xl font-medium tracking-tight">Cum funcționează</h2>
             <p className="mt-2 text-sm leading-6 text-muted">
-              Broker reglementat, API cu permisiuni stricte, monitorizare din panoul de control.
+              Binance, XTB, Plus500 · boți pe date de piață · dashboard și retrageri în 24h.
             </p>
           </Link>
           <Link href="/contact" className="rounded-xl border border-white/8 bg-panel p-6 transition-colors hover:border-accent/30">
