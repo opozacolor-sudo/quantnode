@@ -19,8 +19,8 @@ export default function HistoryPage() {
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-muted">
             De la 20.000 EUR pe 11 ianuarie 2021, execuție zilnică pe Binance, XTB și Plus500. Circa 80% din
-            zile au fost pe plus, între +4% și +74%. Soldul curent de lucru, după depuneri și retrageri
-            zilnice, este 16.455.302,46 EUR.
+            zile au fost pe plus. La început, zilele bune porneau de la +4%, cu un vârf de +74%; pe capitalul
+            mare, rezultatul zilnic e temperat. Soldul actual de lucru este 16.455.302,46 EUR.
           </p>
         </div>
       </section>

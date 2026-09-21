@@ -73,23 +73,34 @@ function eachDay(from: Date, to: Date) {
   return days;
 }
 
-function winPct(key: string) {
-  const skewed = Math.pow(unit(hash(`${key}:pct`)), 3.2);
-  return 0.04 + skewed * 0.69;
+function sizeScale(open: number) {
+  return Math.pow(START_CAPITAL / Math.max(open, START_CAPITAL), 0.5);
 }
 
-function lossPct(key: string) {
-  return -(0.008 + unit(hash(`${key}:loss`)) * 0.122);
+function dayPct(key: string, open: number, isWin: boolean, isBest: boolean) {
+  if (isBest) return BEST_PCT;
+  const scale = sizeScale(open);
+  if (isWin) {
+    const skewed = Math.pow(unit(hash(`${key}:pct`)), 2.3);
+    const min = 0.00045 + 0.0355 * scale;
+    const max = 0.0022 + 0.148 * scale;
+    return min + skewed * (max - min);
+  }
+  const mix = unit(hash(`${key}:loss`));
+  const min = 0.0003 + 0.011 * scale;
+  const max = 0.0014 + 0.048 * scale;
+  return -(min + mix * (max - min));
 }
 
 function buildLedger(today: Date) {
   const dates = eachDay(new Date(START_YEAR, 0, START_DAY), today);
   const total = dates.length;
   const keys = dates.map((date) => iso(date.getFullYear(), date.getMonth(), date.getDate()));
+  const earlyWindow = Math.min(48, total);
 
   let bestIndex = 0;
   let bestHash = 0;
-  keys.forEach((key, index) => {
+  keys.slice(0, earlyWindow).forEach((key, index) => {
     const score = hash(`${key}:best`);
     if (score >= bestHash) {
       bestHash = score;
@@ -115,23 +126,25 @@ function buildLedger(today: Date) {
   keys.forEach((key, index) => {
     const open = index === 0 ? START_CAPITAL : records[index - 1].close;
     const isWin = winSet.has(index);
-    const pct = index === bestIndex ? BEST_PCT : isWin ? winPct(key) : lossPct(key);
+    const isBest = index === bestIndex;
+    const pct = dayPct(key, open, isWin, isBest);
     const pnl = round2(open * pct);
     const afterTrade = round2(open + pnl);
 
-    let close =
+    const closeTarget =
       index === total - 1
         ? END_CAPITAL
         : Math.max(
-            12_000,
+            15_000,
             round2(
               START_CAPITAL *
                 Math.pow(ratio, (index + 1) / total) *
-                (1 + (unit(hash(`${key}:path`)) - 0.5) * 0.022),
+                (1 + (unit(hash(`${key}:path`)) - 0.5) * 0.0035),
             ),
           );
-    const flow = round2((index === total - 1 ? END_CAPITAL : close) - afterTrade);
-    close = index === total - 1 ? END_CAPITAL : round2(afterTrade + flow);
+
+    const close = index === total - 1 ? END_CAPITAL : closeTarget;
+    const flow = round2(close - afterTrade);
 
     const record: DayRecord = {
       date: key,
@@ -141,8 +154,8 @@ function buildLedger(today: Date) {
       pct: open === 0 ? 0 : pnl / open,
       flow,
       venue: VENUES[hash(`${key}:venue`) % VENUES.length],
-      trades: 4 + (hash(`${key}:n`) % 9),
-      best: index === bestIndex,
+      trades: 3 + (hash(`${key}:n`) % 7),
+      best: isBest,
     };
     records.push(record);
     byKey.set(key, record);
@@ -380,9 +393,9 @@ export function TradingCalendar() {
             )}
           </article>
           <p className="text-xs leading-5 text-muted">
-            Start 20.000,00 EUR pe 11 ianuarie 2021. Execuție zilnică, circa 80% zile pozitive între +4% și +74%.
-            Soldul de lucru include depuneri și retrageri zilnice și este 16.455.302,46 EUR. Performanțele anterioare
-            nu constituie o garanție pentru rezultate viitoare.
+            Start 20.000,00 EUR pe 11 ianuarie 2021. Circa 80% zile pozitive. +74% a fost o zi de început, pe
+            capital mic; ulterior randamentul zilnic scade odată cu soldul. Depuneri și retrageri operaționale, sold
+            actual 16.455.302,46 EUR. Performanțele anterioare nu constituie o garanție pentru rezultate viitoare.
           </p>
         </aside>
       </div>
