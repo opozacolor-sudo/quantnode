@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { Footer } from "@/components/Footer";
-import { Navbar } from "@/components/Navbar";
+import { SiteShell } from "@/components/SiteShell";
 
 export default function PlatformPage() {
   return (
-    <>
-      <Navbar />
-      <main className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16 sm:px-6">
+    <SiteShell>
+      <div className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16 sm:px-6">
         <h1 className="text-3xl font-semibold tracking-tight">Conectare</h1>
         <p className="mt-3 text-sm leading-6 text-muted">
           Accesul la platformă este pe bază de invitație, pentru operatori care au deja un broker
@@ -33,11 +31,10 @@ export default function PlatformPage() {
             SSO / acces — disponibil după onboarding
           </button>
         </form>
-        <Link href="/#contact" className="mt-6 text-sm text-accent hover:underline">
+        <Link href="/contact" className="mt-6 text-sm text-accent hover:underline">
           Cereți acces prin formularul de contact
         </Link>
-      </main>
-      <Footer />
-    </>
+      </div>
+    </SiteShell>
   );
 }

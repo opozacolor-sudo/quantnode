@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function Footer() {
   return (
     <footer className="border-t border-white/8">
@@ -8,6 +10,17 @@ export function Footer() {
               Quant<span className="text-accent">Node</span>
             </p>
             <p className="mt-3 text-sm text-muted">Infrastructură software pentru execuție algoritmică.</p>
+            <nav className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted">
+              <Link href="/cum-functioneaza" className="hover:text-foreground">
+                Cum funcționează
+              </Link>
+              <Link href="/contact" className="hover:text-foreground">
+                Contact
+              </Link>
+              <Link href="/docs" className="hover:text-foreground">
+                Documentație
+              </Link>
+            </nav>
           </div>
           <div className="text-sm text-muted">
             <p>QuantNode S.R.L.</p>

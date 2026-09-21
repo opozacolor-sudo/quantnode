@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { Footer } from "@/components/Footer";
-import { Navbar } from "@/components/Navbar";
+import { SiteShell } from "@/components/SiteShell";
 
 export default function DocsPage() {
   return (
-    <>
-      <Navbar />
-      <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+    <SiteShell>
+      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
         <p className="text-xs tracking-wide text-accent uppercase">Documentație</p>
         <h1 className="mt-2 text-4xl font-semibold tracking-tight">API QuantNode</h1>
         <p className="mt-4 text-sm leading-7 text-muted">
@@ -31,11 +29,10 @@ export default function DocsPage() {
           </ol>
         </section>
 
-        <Link href="/#contact" className="mt-12 inline-flex rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-black">
+        <Link href="/contact" className="mt-12 inline-flex rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-black">
           Solicitați acces
         </Link>
-      </main>
-      <Footer />
-    </>
+      </div>
+    </SiteShell>
   );
 }

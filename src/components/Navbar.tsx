@@ -1,17 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const links = [
   { href: "/#despre", label: "Despre noi" },
-  { href: "/#cum-functioneaza", label: "Cum funcționează" },
+  { href: "/cum-functioneaza", label: "Cum funcționează" },
   { href: "/#preturi", label: "Prețuri Live" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/8 bg-[#0b0d10]/80 backdrop-blur-xl">
@@ -25,12 +27,19 @@ export function Navbar() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 text-sm text-muted md:flex">
-          {links.map((link) => (
-            <Link key={link.href} href={link.href} className="transition-colors hover:text-foreground">
-              {link.label}
-            </Link>
-          ))}
+        <nav className="hidden items-center gap-7 text-sm md:flex">
+          {links.map((link) => {
+            const isCurrent = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`transition-colors hover:text-foreground ${isCurrent ? "text-foreground" : "text-muted"}`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden md:block">

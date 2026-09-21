@@ -30,7 +30,7 @@ export function Hero() {
             Vezi Documentația
           </Link>
           <Link
-            href="/#contact"
+            href="/contact"
             className="inline-flex items-center justify-center rounded-md border border-white/12 bg-white/4 px-5 py-3 text-sm font-medium hover:bg-white/8"
           >
             Începe Acum

@@ -1,23 +1,33 @@
+import Link from "next/link";
 import { About } from "@/components/About";
-import { ContactForm } from "@/components/ContactForm";
-import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import { HowItWorks } from "@/components/HowItWorks";
 import { LivePrices } from "@/components/LivePrices";
-import { Navbar } from "@/components/Navbar";
+import { SiteShell } from "@/components/SiteShell";
 
 export default function Home() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <Hero />
-        <LivePrices />
-        <HowItWorks />
-        <About />
-        <ContactForm />
-      </main>
-      <Footer />
-    </>
+    <SiteShell>
+      <Hero />
+      <LivePrices />
+      <section className="border-t border-white/8">
+        <div className="mx-auto grid max-w-6xl gap-4 px-4 py-16 sm:px-6 md:grid-cols-2">
+          <Link href="/cum-functioneaza" className="rounded-xl border border-white/8 bg-panel p-6 transition-colors hover:border-accent/30">
+            <p className="font-mono text-xs text-accent">01</p>
+            <h2 className="mt-3 text-xl font-medium tracking-tight">Cum funcționează</h2>
+            <p className="mt-2 text-sm leading-6 text-muted">
+              Broker reglementat, API cu permisiuni stricte, monitorizare din panoul de control.
+            </p>
+          </Link>
+          <Link href="/contact" className="rounded-xl border border-white/8 bg-panel p-6 transition-colors hover:border-accent/30">
+            <p className="font-mono text-xs text-accent">02</p>
+            <h2 className="mt-3 text-xl font-medium tracking-tight">Contact</h2>
+            <p className="mt-2 text-sm leading-6 text-muted">
+              Acces la platformă, integrare API sau întrebări despre risc — fără pitch agresiv.
+            </p>
+          </Link>
+        </div>
+      </section>
+      <About />
+    </SiteShell>
   );
 }
