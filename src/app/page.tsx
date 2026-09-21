@@ -22,7 +22,7 @@ export default function Home() {
             <p className="font-mono text-xs text-accent">02</p>
             <h2 className="mt-3 text-xl font-medium tracking-tight">Istoric tranzacționări</h2>
             <p className="mt-2 text-sm leading-6 text-muted">
-              Calendar de execuție din 2021 până azi. Zile, venue-uri și rezultat lunar.
+              De la 20.000 EUR în 2021 la 16,45 mil. EUR azi. ~80% zile pe plus, între 4% și 74%.
             </p>
           </Link>
           <Link href="/contact" className="rounded-xl border border-white/8 bg-panel p-6 transition-colors hover:border-accent/30">
