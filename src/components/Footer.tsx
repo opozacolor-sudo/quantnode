@@ -36,7 +36,7 @@ export function Footer() {
             custodia activelor clienților. Datele de preț sunt informative și pot fi întârziate sau incomplete.
           </p>
         </div>
-        <p className="mt-10 text-xs text-muted">© {new Date().getFullYear()} QuantNode. Toate drepturile rezervate.</p>
+        <p className="mt-10 text-xs text-muted">© 2026 QuantNode. Toate drepturile rezervate.</p>
       </div>
     </footer>
   );
