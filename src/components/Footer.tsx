@@ -14,6 +14,9 @@ export function Footer() {
               <Link href="/cum-functioneaza" className="hover:text-foreground">
                 Cum funcționează
               </Link>
+              <Link href="/istoric" className="hover:text-foreground">
+                Istoric
+              </Link>
               <Link href="/contact" className="hover:text-foreground">
                 Contact
               </Link>
