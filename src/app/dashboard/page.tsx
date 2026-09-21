@@ -52,8 +52,27 @@ export default function DashboardPage() {
     ]);
 
     if (walletRes.data) setWallet(walletRes.data);
-    if (settingsRes.data) setSettings(settingsRes.data);
     if (ledgerRes.data) setRows(ledgerRes.data as LedgerRow[]);
+
+    if (settingsRes.data) {
+      setSettings(settingsRes.data);
+    } else {
+      const userId = sessionData.session.user.id;
+      const { data: created, error: createError } = await supabase
+        .from("trading_settings")
+        .insert({
+          user_id: userId,
+          max_trade: 500,
+          daily_limit: 2500,
+          stop_loss_pct: 2.5,
+        })
+        .select("max_trade, daily_limit, stop_loss_pct")
+        .single();
+      if (!createError && created) setSettings(created);
+      else {
+        setSettings({ max_trade: 500, daily_limit: 2500, stop_loss_pct: 2.5 });
+      }
+    }
     setLoading(false);
   }, [router]);
 
@@ -83,25 +102,28 @@ export default function DashboardPage() {
     setError("");
     setMessage("");
     const form = new FormData(event.currentTarget);
+    const maxTrade = Number(form.get("max_trade"));
+    const stopLoss = Number(form.get("stop_loss_pct"));
+    const dailyLimit = Number(form.get("daily_limit") || settings?.daily_limit || 2500);
     const supabase = getSupabaseBrowser();
-    const { data: sessionData } = await supabase.auth.getSession();
-    const userId = sessionData.session?.user.id;
-    if (!userId) return;
-    const { error: updateError } = await supabase
-      .from("trading_settings")
-      .update({
-        max_trade: Number(form.get("max_trade")),
-        daily_limit: Number(form.get("daily_limit")),
-        stop_loss_pct: Number(form.get("stop_loss_pct")),
-        updated_at: new Date().toISOString(),
-      })
-      .eq("user_id", userId);
-    if (updateError) {
-      setError(updateError.message);
+    const { data, error: rpcError } = await supabase.rpc("save_trading_settings", {
+      p_max_trade: maxTrade,
+      p_stop_loss_pct: stopLoss,
+      p_daily_limit: dailyLimit,
+    });
+    if (rpcError) {
+      setError(rpcError.message);
       return;
     }
-    setMessage("Limitele și Stop-Loss au fost salvate.");
-    await load();
+    const saved = Array.isArray(data) ? data[0] : data;
+    if (saved) {
+      setSettings({
+        max_trade: Number(saved.max_trade),
+        daily_limit: Number(saved.daily_limit),
+        stop_loss_pct: Number(saved.stop_loss_pct),
+      });
+    }
+    setMessage("Stop-Loss și limita per tranzacție au fost salvate.");
   }
 
   async function logout() {
@@ -204,59 +226,51 @@ export default function DashboardPage() {
 
         <section className="rounded-xl border border-white/8 bg-panel p-6">
           <h2 className="text-lg font-medium">Limite de tranzacționare și Stop-Loss</h2>
-          <p className="mt-1 text-sm text-muted">Boții nu deschid poziții în afara acestor praguri.</p>
-          {settings ? (
-            <form onSubmit={onSaveSettings} className="mt-6 grid gap-4 md:grid-cols-3">
-              <div>
-                <label className="mb-1.5 block text-xs text-muted" htmlFor="max_trade">
-                  Limită per tranzacție (EUR)
-                </label>
-                <input
-                  id="max_trade"
-                  name="max_trade"
-                  type="number"
-                  min={10}
-                  step="0.01"
-                  defaultValue={Number(settings.max_trade)}
-                  className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
-                />
-              </div>
-              <div>
-                <label className="mb-1.5 block text-xs text-muted" htmlFor="daily_limit">
-                  Limită zilnică (EUR)
-                </label>
-                <input
-                  id="daily_limit"
-                  name="daily_limit"
-                  type="number"
-                  min={10}
-                  step="0.01"
-                  defaultValue={Number(settings.daily_limit)}
-                  className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
-                />
-              </div>
-              <div>
-                <label className="mb-1.5 block text-xs text-muted" htmlFor="stop_loss_pct">
-                  Stop-Loss (%)
-                </label>
-                <input
-                  id="stop_loss_pct"
-                  name="stop_loss_pct"
-                  type="number"
-                  min={0.1}
-                  max={50}
-                  step="0.1"
-                  defaultValue={Number(settings.stop_loss_pct)}
-                  className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
-                />
-              </div>
-              <div className="md:col-span-3">
-                <button type="submit" className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-black">
-                  Salvează limitele
-                </button>
-              </div>
-            </form>
-          ) : null}
+          <p className="mt-1 text-sm text-muted">
+            Valorile se salvează pe contul tău. Boții nu deschid poziții peste limita per tranzacție și închid
+            la Stop-Loss.
+          </p>
+          <form onSubmit={onSaveSettings} className="mt-6 grid gap-4 md:grid-cols-2">
+            <div>
+              <label className="mb-1.5 block text-xs text-muted" htmlFor="max_trade">
+                Limită valoare per tranzacție (EUR)
+              </label>
+              <input
+                id="max_trade"
+                name="max_trade"
+                type="number"
+                min={10}
+                step="0.01"
+                required
+                key={`max-${settings?.max_trade ?? "empty"}`}
+                defaultValue={settings ? Number(settings.max_trade) : 500}
+                className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
+              />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-xs text-muted" htmlFor="stop_loss_pct">
+                Stop-Loss (%)
+              </label>
+              <input
+                id="stop_loss_pct"
+                name="stop_loss_pct"
+                type="number"
+                min={0.1}
+                max={50}
+                step="0.1"
+                required
+                key={`sl-${settings?.stop_loss_pct ?? "empty"}`}
+                defaultValue={settings ? Number(settings.stop_loss_pct) : 2.5}
+                className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
+              />
+            </div>
+            <input type="hidden" name="daily_limit" value={settings ? Number(settings.daily_limit) : 2500} />
+            <div className="md:col-span-2">
+              <button type="submit" className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-black">
+                Salvează Stop-Loss și limita
+              </button>
+            </div>
+          </form>
         </section>
 
         <section className="overflow-hidden rounded-xl border border-white/8">
