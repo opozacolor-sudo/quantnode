@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <SiteShell>
-      <section className="relative overflow-hidden border-b border-white/8">
+      <section className="relative overflow-hidden border-b border-line">
         <div className="absolute inset-0 grid-bg" />
         <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <p className="text-xs tracking-wide text-accent uppercase">Contact</p>
@@ -26,11 +26,11 @@ export default function ContactPage() {
 
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-12 lg:py-16">
         <aside className="space-y-4 lg:col-span-4">
-          <div className="rounded-xl border border-white/8 bg-panel p-5">
+          <div className="rounded-xl border border-line bg-panel p-5">
             <p className="text-xs tracking-wide text-muted uppercase">Email</p>
             <p className="mt-2 font-mono text-sm">contact@quantnode.io</p>
           </div>
-          <div className="rounded-xl border border-white/8 bg-panel p-5">
+          <div className="rounded-xl border border-line bg-panel p-5">
             <p className="text-xs tracking-wide text-muted uppercase">Util</p>
             <ul className="mt-3 space-y-2 text-sm leading-6 text-muted">
               <li>Broker / venue reglementat</li>
@@ -38,7 +38,7 @@ export default function ContactPage() {
               <li>Cerințe de risc (Stop-Loss, limite)</li>
             </ul>
           </div>
-          <div className="rounded-xl border border-white/8 bg-panel p-5">
+          <div className="rounded-xl border border-line bg-panel p-5">
             <p className="text-xs tracking-wide text-muted uppercase">Răspuns</p>
             <p className="mt-2 text-sm leading-6 text-muted">
               Mesajele sunt înregistrate în sistem. Nu trimitem oferte speculative și nu cerem transfer de fonduri.

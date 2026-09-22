@@ -32,7 +32,7 @@ const steps = [
 export default function HowItWorksPage() {
   return (
     <SiteShell>
-      <section className="relative overflow-hidden border-b border-white/8">
+      <section className="relative overflow-hidden border-b border-line">
         <div className="absolute inset-0 grid-bg" />
         <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <p className="text-xs tracking-wide text-accent uppercase">Operațiuni</p>
@@ -47,7 +47,7 @@ export default function HowItWorksPage() {
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <ol className="space-y-5">
           {steps.map((step) => (
-            <li key={step.n} className="grid gap-6 rounded-2xl border border-white/8 bg-panel p-6 sm:p-8 lg:grid-cols-12">
+            <li key={step.n} className="grid gap-6 rounded-2xl border border-line bg-panel p-6 sm:p-8 lg:grid-cols-12">
               <div className="lg:col-span-2">
                 <p className="font-mono text-3xl text-accent/80">{step.n}</p>
               </div>
@@ -68,19 +68,19 @@ export default function HowItWorksPage() {
         </ol>
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
-          <article className="rounded-xl border border-white/8 bg-panel-2 p-5">
+          <article className="rounded-xl border border-line bg-panel-2 p-5">
             <h3 className="text-sm font-medium">Ce furnizăm</h3>
             <p className="mt-2 text-sm leading-6 text-muted">
               Automatizare pe venue-uri majore, date de piață și un panou de control pentru execuție și fonduri.
             </p>
           </article>
-          <article className="rounded-xl border border-white/8 bg-panel-2 p-5">
+          <article className="rounded-xl border border-line bg-panel-2 p-5">
             <h3 className="text-sm font-medium">Ce nu facem</h3>
             <p className="mt-2 text-sm leading-6 text-muted">
               Nu deschidem tranzacții care nu se încadrează în limitele impuse de utilizator.
             </p>
           </article>
-          <article className="rounded-xl border border-white/8 bg-panel-2 p-5">
+          <article className="rounded-xl border border-line bg-panel-2 p-5">
             <h3 className="text-sm font-medium">Risc</h3>
             <p className="mt-2 text-sm leading-6 text-muted">
               Tranzacționarea implică risc de pierdere. Limitele tale rămân regula de execuție.
@@ -89,12 +89,12 @@ export default function HowItWorksPage() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 sm:flex-row">
-          <Link href="/contact" className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-3 text-sm font-medium text-black">
+          <Link href="/contact" className="inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-medium text-white">
             Solicitați acces
           </Link>
           <Link
             href="/docs"
-            className="inline-flex items-center justify-center rounded-md border border-white/12 bg-white/4 px-5 py-3 text-sm font-medium hover:bg-white/8"
+            className="inline-flex items-center justify-center rounded-full border border-line px-5 py-3 text-sm font-medium hover:bg-panel"
           >
             Vezi documentația
           </Link>

@@ -29,7 +29,7 @@ export default function DocsPage() {
           </ol>
         </section>
 
-        <Link href="/contact" className="mt-12 inline-flex rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-black">
+        <Link href="/contact" className="mt-12 inline-flex rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white">
           Solicitați acces
         </Link>
       </div>

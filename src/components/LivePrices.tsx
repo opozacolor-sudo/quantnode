@@ -57,7 +57,7 @@ export function LivePrices() {
   }, []);
 
   return (
-    <section id="preturi" className="scroll-mt-20 border-t border-white/8">
+    <section id="preturi" className="scroll-mt-20 border-t border-line">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -76,11 +76,11 @@ export function LivePrices() {
         </div>
 
         {status === "error" ? (
-          <p className="rounded-lg border border-white/8 bg-panel px-4 py-6 text-sm text-muted">
+          <p className="rounded-lg border border-line bg-panel px-4 py-6 text-sm text-muted">
             Fluxul de prețuri este temporar indisponibil. Reîncercați în câteva momente.
           </p>
         ) : (
-          <div className="overflow-hidden rounded-xl border border-white/8">
+          <div className="overflow-hidden rounded-xl border border-line">
             <div className="grid grid-cols-12 bg-panel-2 px-4 py-3 font-mono text-[11px] tracking-wide text-muted uppercase">
               <div className="col-span-5 sm:col-span-4">Instrument</div>
               <div className="col-span-4 text-right sm:col-span-3">Preț</div>
@@ -95,7 +95,7 @@ export function LivePrices() {
                 return (
                   <div
                     key={quote.id}
-                    className="grid grid-cols-12 items-center border-t border-white/8 px-4 py-4 text-sm"
+                    className="grid grid-cols-12 items-center border-t border-line px-4 py-4 text-sm"
                   >
                     <div className="col-span-5 sm:col-span-4">
                       <div className="font-medium">{quote.symbol}</div>
@@ -104,7 +104,7 @@ export function LivePrices() {
                     <div className="col-span-4 text-right font-mono sm:col-span-3">
                       {formatPrice(quote.price)}
                     </div>
-                    <div className={`col-span-3 text-right font-mono ${up ? "text-accent" : "text-red-400"}`}>
+                    <div className={`col-span-3 text-right font-mono ${up ? "text-gain" : "text-loss"}`}>
                       {quote.change24h === null
                         ? "—"
                         : `${up ? "+" : ""}${quote.change24h.toFixed(2)}%`}

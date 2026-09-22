@@ -40,7 +40,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 rounded-xl border border-white/8 bg-panel p-6 sm:p-8">
+    <form onSubmit={onSubmit} className="space-y-4 rounded-xl border border-line bg-panel p-6 sm:p-8">
       <div className="hidden">
         <label htmlFor="company">Company</label>
         <input id="company" name="company" tabIndex={-1} autoComplete="off" />
@@ -56,7 +56,7 @@ export function ContactForm() {
             required
             minLength={2}
             maxLength={120}
-            className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
+            className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent/50"
           />
         </div>
         <div>
@@ -68,7 +68,7 @@ export function ContactForm() {
             name="email"
             type="email"
             required
-            className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
+            className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent/50"
           />
         </div>
       </div>
@@ -84,13 +84,13 @@ export function ContactForm() {
           maxLength={5000}
           rows={7}
           placeholder="Context tehnic, broker, volum estimat, întrebări despre API sau risc."
-          className="w-full resize-y rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-accent/50"
+          className="w-full resize-y rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-accent/50"
         />
       </div>
       <button
         type="submit"
         disabled={status === "sending"}
-        className="rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-black disabled:opacity-60"
+        className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white disabled:opacity-60"
       >
         {status === "sending" ? "Se trimite…" : "Trimite"}
       </button>

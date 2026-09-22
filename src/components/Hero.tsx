@@ -1,57 +1,71 @@
 import Link from "next/link";
 
+function Candle({
+  className,
+  color,
+  delay,
+  height,
+}: {
+  className: string;
+  color: string;
+  delay: string;
+  height: string;
+}) {
+  return (
+    <div
+      className={`candle-float pointer-events-none absolute hidden sm:block ${className}`}
+      style={{ animationDelay: delay }}
+      aria-hidden
+    >
+      <div className={`mx-auto h-6 w-px ${color} opacity-40`} />
+      <div className={`${height} w-2.5 rounded-sm ${color}`} />
+      <div className={`mx-auto h-5 w-px ${color} opacity-40`} />
+    </div>
+  );
+}
+
 export function Hero() {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden">
       <div className="absolute inset-0 grid-bg" />
-      <div className="absolute -top-24 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-accent/8 blur-3xl" />
+      <Candle className="top-16 left-[8%]" color="bg-accent" delay="0s" height="h-14" />
+      <Candle className="top-28 left-[18%]" color="bg-violet-400" delay="0.6s" height="h-10" />
+      <Candle className="top-12 right-[14%]" color="bg-sky-400" delay="1.1s" height="h-16" />
+      <Candle className="right-[8%] bottom-28" color="bg-indigo-400" delay="1.8s" height="h-12" />
+      <Candle className="bottom-24 left-[12%]" color="bg-blue-300" delay="0.3s" height="h-9" />
+      <Candle className="top-40 right-[22%]" color="bg-accent" delay="2.2s" height="h-8" />
 
-      <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-        <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/8 bg-white/3 px-3 py-1 text-xs tracking-wide text-muted uppercase">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-          SaaS · API-first · fără custodie
-        </p>
+      <div className="relative mx-auto flex max-w-4xl flex-1 flex-col justify-center px-4 pt-10 pb-8 text-center sm:px-6">
+        <p className="mb-6 text-sm text-muted">SaaS · API-first · fără custodie</p>
 
-        <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
-          Infrastructură de tranzacționare algoritmică bazată pe date
+        <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl lg:text-7xl">
+          Infrastructură de tranzacționare pentru piețe globale.
         </h1>
 
-        <p className="mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
-          QuantNode furnizează software de execuție, orchestrare și monitorizare pentru agenți algoritmici.
-          Capitalul rămâne la brokerul dumneavoastră reglementat. Controlul se face exclusiv prin API, cu
-          permisiuni stricte de trading — fără deținere sau retragere de fonduri.
+        <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
+          QuantNode execută pe crypto, mărfuri, acțiuni și valute — Bitcoin, Ethereum, aur/USD, petrol și
+          mai multe perechi FX. Capitalul rămâne la brokerul dumneavoastră. Controlul se face prin API.
         </p>
 
-        <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-          <Link
-            href="/docs"
-            className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-3 text-sm font-medium text-black transition-opacity hover:opacity-90"
-          >
-            Vezi Documentația
-          </Link>
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center rounded-md border border-white/12 bg-white/4 px-5 py-3 text-sm font-medium hover:bg-white/8"
+            className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
-            Începe Acum
+            Începe acum
+          </Link>
+          <Link
+            href="/cum-functioneaza"
+            className="inline-flex items-center justify-center rounded-full border border-line px-6 py-3 text-sm font-medium hover:bg-panel"
+          >
+            Explorează platforma
           </Link>
         </div>
-
-        <dl className="mt-16 grid gap-6 border-t border-white/8 pt-8 sm:grid-cols-3">
-          <div>
-            <dt className="text-xs tracking-wide text-muted uppercase">Model</dt>
-            <dd className="mt-1 text-sm">SaaS de infrastructură, nu gestiune de portofoliu</dd>
-          </div>
-          <div>
-            <dt className="text-xs tracking-wide text-muted uppercase">Custodie</dt>
-            <dd className="mt-1 text-sm">Zero. Conturile rămân la brokerul conectat</dd>
-          </div>
-          <div>
-            <dt className="text-xs tracking-wide text-muted uppercase">Acces API</dt>
-            <dd className="mt-1 text-sm">Chei cu scop limitat: trading, fără withdraw</dd>
-          </div>
-        </dl>
       </div>
+
+      <p className="relative mb-2 px-4 pb-20 text-center text-sm text-muted">
+        Piețe pe care tranzacționăm.
+      </p>
     </section>
   );
 }

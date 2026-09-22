@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function HistoryPage() {
   return (
     <SiteShell>
-      <section className="relative overflow-hidden border-b border-white/8">
+      <section className="relative overflow-hidden border-b border-line">
         <div className="absolute inset-0 grid-bg" />
         <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
           <p className="text-xs tracking-wide text-accent uppercase">Categorie</p>

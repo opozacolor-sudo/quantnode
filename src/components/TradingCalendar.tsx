@@ -221,7 +221,7 @@ export function TradingCalendar() {
   }, [ledger, year, month]);
 
   if (!today || !ledger) {
-    return <div className="h-[28rem] animate-pulse rounded-2xl border border-white/8 bg-panel" />;
+    return <div className="h-[28rem] animate-pulse rounded-2xl border border-line bg-panel" />;
   }
 
   const monthList = [...monthRecords.values()];
@@ -246,17 +246,17 @@ export function TradingCalendar() {
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <article className="rounded-xl border border-white/8 bg-panel p-5">
+        <article className="rounded-xl border border-line bg-panel p-5">
           <p className="text-xs tracking-wide text-muted uppercase">Capital inițial</p>
           <p className="mt-2 font-mono text-xl">{money(START_CAPITAL)}</p>
           <p className="mt-1 text-xs text-muted">11 ianuarie 2021</p>
         </article>
-        <article className="rounded-xl border border-white/8 bg-panel p-5">
+        <article className="rounded-xl border border-line bg-panel p-5">
           <p className="text-xs tracking-wide text-muted uppercase">Capital actual</p>
-          <p className="mt-2 font-mono text-xl text-accent">{money(latest.close)}</p>
+          <p className="mt-2 font-mono text-xl text-gain">{money(latest.close)}</p>
           <p className="mt-1 text-xs text-muted">Sold cu care tranzacționăm azi</p>
         </article>
-        <article className="rounded-xl border border-white/8 bg-panel p-5">
+        <article className="rounded-xl border border-line bg-panel p-5">
           <p className="text-xs tracking-wide text-muted uppercase">Zile pe plus</p>
           <p className="mt-2 font-mono text-xl">
             {new Intl.NumberFormat("ro-RO", { maximumFractionDigits: 1 }).format((wins / ledger.records.length) * 100)}%
@@ -265,9 +265,9 @@ export function TradingCalendar() {
             {wins} din {ledger.records.length} zile de execuție
           </p>
         </article>
-        <article className="rounded-xl border border-white/8 bg-panel p-5">
+        <article className="rounded-xl border border-line bg-panel p-5">
           <p className="text-xs tracking-wide text-muted uppercase">Cea mai bună zi</p>
-          <p className="mt-2 font-mono text-xl text-accent">{percent(BEST_PCT)}</p>
+          <p className="mt-2 font-mono text-xl text-gain">{percent(BEST_PCT)}</p>
           <p className="mt-1 text-xs text-muted">{best?.date ?? "—"}</p>
         </article>
       </div>
@@ -285,7 +285,7 @@ export function TradingCalendar() {
                   setSelected(null);
                 }}
                 className={`rounded-md px-3 py-1.5 text-sm ${
-                  item === year ? "bg-accent text-black" : "border border-white/10 text-muted hover:text-foreground"
+                  item === year ? "bg-accent text-white" : "border border-line text-muted hover:text-foreground"
                 }`}
               >
                 {item}
@@ -293,12 +293,12 @@ export function TradingCalendar() {
             ))}
           </div>
 
-          <div className="rounded-2xl border border-white/8 bg-panel p-5 sm:p-6">
+          <div className="rounded-2xl border border-line bg-panel p-5 sm:p-6">
             <div className="mb-5 flex items-center justify-between gap-3">
               <button
                 type="button"
                 onClick={() => shiftMonth(-1)}
-                className="rounded-md border border-white/10 px-3 py-1.5 text-sm text-muted hover:text-foreground"
+              className="rounded-md border border-line px-3 py-1.5 text-sm text-muted hover:text-foreground"
               >
                 Anterior
               </button>
@@ -308,7 +308,7 @@ export function TradingCalendar() {
               <button
                 type="button"
                 onClick={() => shiftMonth(1)}
-                className="rounded-md border border-white/10 px-3 py-1.5 text-sm text-muted hover:text-foreground"
+              className="rounded-md border border-line px-3 py-1.5 text-sm text-muted hover:text-foreground"
               >
                 Următor
               </button>
@@ -328,12 +328,12 @@ export function TradingCalendar() {
                 const isSelected = selected?.date === iso(year, month, day);
                 const isFuture = new Date(year, month, day) > today;
                 const tone = isFuture
-                  ? "border-white/6 text-muted/40"
+                  ? "border-line text-muted/40"
                   : !record
-                    ? "border-white/6 text-muted"
+                    ? "border-line text-muted"
                     : record.pnl >= 0
-                      ? "border-accent/30 bg-accent/10 text-accent"
-                      : "border-red-400/30 bg-red-400/10 text-red-300";
+                      ? "border-gain/30 bg-gain/10 text-gain"
+                      : "border-loss/30 bg-loss/10 text-loss";
                 return (
                   <button
                     key={day}
@@ -352,9 +352,9 @@ export function TradingCalendar() {
         </div>
 
         <aside className="space-y-4 lg:col-span-4">
-          <article className="rounded-xl border border-white/8 bg-panel p-5">
+          <article className="rounded-xl border border-line bg-panel p-5">
             <p className="text-xs tracking-wide text-muted uppercase">Luna selectată</p>
-            <p className={`mt-2 font-mono text-2xl ${monthPnl >= 0 ? "text-accent" : "text-red-400"}`}>
+            <p className={`mt-2 font-mono text-2xl ${monthPnl >= 0 ? "text-gain" : "text-loss"}`}>
               {money(monthPnl)}
             </p>
             <p className="mt-2 text-sm text-muted">
@@ -368,7 +368,7 @@ export function TradingCalendar() {
               <p className="mt-2 text-sm text-muted">Sold final lună: {money(monthList[monthList.length - 1].close)}</p>
             ) : null}
           </article>
-          <article className="rounded-xl border border-white/8 bg-panel p-5">
+          <article className="rounded-xl border border-line bg-panel p-5">
             <p className="text-xs tracking-wide text-muted uppercase">Ziua selectată</p>
             {selected ? (
               <div className="mt-3 space-y-2 text-sm">
@@ -379,7 +379,7 @@ export function TradingCalendar() {
                 <p className="text-muted">
                   {selected.venue} · {selected.trades} ordine
                 </p>
-                <p className={`font-mono ${selected.pnl >= 0 ? "text-accent" : "text-red-400"}`}>
+                <p className={`font-mono ${selected.pnl >= 0 ? "text-gain" : "text-loss"}`}>
                   Rezultat {percent(selected.pct)} · {money(selected.pnl)}
                 </p>
                 <p className="text-muted">Deschidere: {money(selected.open)}</p>

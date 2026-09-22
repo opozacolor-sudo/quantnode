@@ -139,10 +139,10 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-full bg-background">
-      <header className="sticky top-0 z-40 border-b border-white/8 bg-[#0b0d10]/85 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-line bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link href="/dashboard" className="flex items-center gap-2 font-medium">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-accent/30 bg-accent/10 font-mono text-xs text-accent">
+            <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-accent font-mono text-xs text-white">
               QN
             </span>
             Dashboard
@@ -152,7 +152,7 @@ export default function DashboardPage() {
             <Link href="/" className="text-muted hover:text-foreground">
               Site
             </Link>
-            <button type="button" onClick={logout} className="rounded-md border border-white/10 px-3 py-1.5 hover:bg-white/5">
+            <button type="button" onClick={logout} className="rounded-full border border-line px-3 py-1.5 hover:bg-panel">
               Ieșire
             </button>
           </div>
@@ -167,15 +167,15 @@ export default function DashboardPage() {
           <p className="text-xs tracking-wide text-accent uppercase">Portofel</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight">Controlul fondurilor</h1>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
-            <article className="rounded-xl border border-white/8 bg-panel p-5">
+            <article className="rounded-xl border border-line bg-panel p-5">
               <p className="text-xs text-muted">Sold disponibil</p>
               <p className="mt-2 font-mono text-2xl">{wallet ? money(Number(wallet.available), wallet.currency) : "—"}</p>
             </article>
-            <article className="rounded-xl border border-white/8 bg-panel p-5">
+            <article className="rounded-xl border border-line bg-panel p-5">
               <p className="text-xs text-muted">Stop-Loss</p>
               <p className="mt-2 font-mono text-2xl">{settings ? `${Number(settings.stop_loss_pct)}%` : "—"}</p>
             </article>
-            <article className="rounded-xl border border-white/8 bg-panel p-5">
+            <article className="rounded-xl border border-line bg-panel p-5">
               <p className="text-xs text-muted">Limită tranzacție</p>
               <p className="mt-2 font-mono text-2xl">{settings ? money(Number(settings.max_trade)) : "—"}</p>
             </article>
@@ -183,7 +183,7 @@ export default function DashboardPage() {
         </section>
 
         <section className="grid gap-4 lg:grid-cols-2">
-          <form onSubmit={(event) => onMove("deposit", event)} className="rounded-xl border border-white/8 bg-panel p-6">
+          <form onSubmit={(event) => onMove("deposit", event)} className="rounded-xl border border-line bg-panel p-6">
             <h2 className="text-lg font-medium">Depunere</h2>
             <p className="mt-1 text-sm text-muted">Adaugă fonduri în portofel (EUR).</p>
             <label className="mt-4 mb-1.5 block text-xs text-muted" htmlFor="deposit-amount">
@@ -196,14 +196,14 @@ export default function DashboardPage() {
               min={10}
               step="0.01"
               required
-              className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
+              className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent/50"
             />
-            <button type="submit" className="mt-4 rounded-md bg-accent px-4 py-2 text-sm font-medium text-black">
+            <button type="submit" className="mt-4 rounded-full bg-accent px-4 py-2 text-sm font-medium text-white">
               Depune
             </button>
           </form>
 
-          <form onSubmit={(event) => onMove("withdraw", event)} className="rounded-xl border border-white/8 bg-panel p-6">
+          <form onSubmit={(event) => onMove("withdraw", event)} className="rounded-xl border border-line bg-panel p-6">
             <h2 className="text-lg font-medium">Retragere</h2>
             <p className="mt-1 text-sm text-muted">În contul tău, procesare în maxim 24 de ore.</p>
             <label className="mt-4 mb-1.5 block text-xs text-muted" htmlFor="withdraw-amount">
@@ -216,15 +216,15 @@ export default function DashboardPage() {
               min={10}
               step="0.01"
               required
-              className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
+              className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent/50"
             />
-            <button type="submit" className="mt-4 rounded-md border border-white/12 bg-white/5 px-4 py-2 text-sm">
+            <button type="submit" className="mt-4 rounded-full border border-line bg-panel px-4 py-2 text-sm">
               Retrage
             </button>
           </form>
         </section>
 
-        <section className="rounded-xl border border-white/8 bg-panel p-6">
+        <section className="rounded-xl border border-line bg-panel p-6">
           <h2 className="text-lg font-medium">Limite de tranzacționare și Stop-Loss</h2>
           <p className="mt-1 text-sm text-muted">
             Valorile se salvează pe contul tău. Boții nu deschid poziții peste limita per tranzacție și închid
@@ -244,7 +244,7 @@ export default function DashboardPage() {
                 required
                 key={`max-${settings?.max_trade ?? "empty"}`}
                 defaultValue={settings ? Number(settings.max_trade) : 500}
-                className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
+                className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent/50"
               />
             </div>
             <div>
@@ -261,20 +261,20 @@ export default function DashboardPage() {
                 required
                 key={`sl-${settings?.stop_loss_pct ?? "empty"}`}
                 defaultValue={settings ? Number(settings.stop_loss_pct) : 2.5}
-                className="w-full rounded-md border border-white/10 bg-black/30 px-3 py-2.5 text-sm outline-none focus:border-accent/50"
+                className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent/50"
               />
             </div>
             <input type="hidden" name="daily_limit" value={settings ? Number(settings.daily_limit) : 2500} />
             <div className="md:col-span-2">
-              <button type="submit" className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-black">
+              <button type="submit" className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white">
                 Salvează Stop-Loss și limita
               </button>
             </div>
           </form>
         </section>
 
-        <section className="overflow-hidden rounded-xl border border-white/8">
-          <div className="border-b border-white/8 bg-panel-2 px-4 py-4">
+        <section className="overflow-hidden rounded-xl border border-line">
+          <div className="border-b border-line bg-panel-2 px-4 py-4">
             <h2 className="text-lg font-medium">Istoric tranzacții</h2>
           </div>
           <div className="overflow-x-auto">
@@ -290,7 +290,7 @@ export default function DashboardPage() {
               </thead>
               <tbody>
                 {rows.map((row) => (
-                  <tr key={row.id} className="border-t border-white/8">
+                  <tr key={row.id} className="border-t border-line">
                     <td className="px-4 py-3 text-muted">{new Date(row.created_at).toLocaleString("ro-RO")}</td>
                     <td className="px-4 py-3">{typeLabel(row.type)}</td>
                     <td className="px-4 py-3 text-muted">{row.note ?? "—"}</td>

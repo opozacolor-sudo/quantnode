@@ -17,10 +17,10 @@ export function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/8 bg-[#0b0d10]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2 font-medium tracking-tight">
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-accent/30 bg-accent/10 font-mono text-xs text-accent">
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-accent font-mono text-xs text-white">
             QN
           </span>
           <span>
@@ -46,15 +46,15 @@ export function Navbar() {
         <div className="hidden md:block">
           <Link
             href="/platform"
-            className="rounded-md border border-white/10 bg-white/5 px-3.5 py-2 text-sm transition-colors hover:border-accent/40 hover:bg-accent/10"
+            className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
-            Conectare / Platformă
+            Conectare
           </Link>
         </div>
 
         <button
           type="button"
-          className="rounded-md border border-white/10 px-3 py-1.5 text-sm md:hidden"
+          className="rounded-full border border-line px-3 py-1.5 text-sm md:hidden"
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-label="Deschide meniul"
@@ -64,7 +64,7 @@ export function Navbar() {
       </div>
 
       {open ? (
-        <div className="border-t border-white/8 px-4 py-4 md:hidden">
+        <div className="border-t border-line px-4 py-4 md:hidden">
           <div className="flex flex-col gap-3 text-sm">
             {links.map((link) => (
               <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="text-muted hover:text-foreground">
@@ -74,9 +74,9 @@ export function Navbar() {
             <Link
               href="/platform"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-md border border-white/10 bg-white/5 px-3.5 py-2 text-center"
+              className="mt-2 rounded-full bg-accent px-3.5 py-2 text-center text-white"
             >
-              Conectare / Platformă
+              Conectare
             </Link>
           </div>
         </div>
