@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useI18n } from "@/i18n/I18nProvider";
 
 function Candle({
   className,
@@ -25,6 +28,8 @@ function Candle({
 }
 
 export function Hero() {
+  const { t } = useI18n();
+
   return (
     <section className="relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden">
       <div className="absolute inset-0 grid-bg" />
@@ -36,37 +41,30 @@ export function Hero() {
       <Candle className="top-40 right-[22%]" color="bg-accent" delay="2.2s" height="h-8" />
 
       <div className="relative mx-auto flex max-w-4xl flex-1 flex-col justify-center px-4 pt-10 pb-8 text-center sm:px-6">
-        <p className="mb-6 text-sm text-muted">SaaS · API-first · fără custodie</p>
+        <p className="mb-6 text-sm text-muted">{t("hero.kicker")}</p>
 
-        <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl lg:text-7xl">
-          Investește azi pentru un mâine mai bun.
-        </h1>
-        <p className="mt-3 text-sm tracking-wide text-muted sm:text-base">Invest today for a better tomorrow.</p>
+        <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl lg:text-7xl">{t("hero.title")}</h1>
+        <p className="mt-3 text-sm tracking-wide text-muted sm:text-base">{t("hero.tagline")}</p>
 
-        <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
-          AlgorithmNode execută automat, prin agenți care citesc piața la microsecunde și boți care
-          urmăresc factorii de preț pe crypto, aur/USD, petrol, acțiuni, mărfuri și valute.
-        </p>
+        <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">{t("hero.body")}</p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             href="/contact"
             className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
-            Începe acum
+            {t("hero.cta")}
           </Link>
           <Link
             href="/cum-functioneaza"
             className="inline-flex items-center justify-center rounded-full border border-line px-6 py-3 text-sm font-medium hover:bg-panel"
           >
-            Explorează platforma
+            {t("hero.explore")}
           </Link>
         </div>
       </div>
 
-      <p className="relative mb-2 px-4 pb-20 text-center text-sm text-muted">
-        Piețe pe care tranzacționăm.
-      </p>
+      <p className="relative mb-2 px-4 pb-20 text-center text-sm text-muted">{t("hero.markets")}</p>
     </section>
   );
 }

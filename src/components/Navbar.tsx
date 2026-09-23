@@ -4,22 +4,25 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { BrandMark } from "@/components/BrandMark";
-
-const links = [
-  { href: "/#despre", label: "Despre noi" },
-  { href: "/cum-functioneaza", label: "Cum funcționează" },
-  { href: "/istoric", label: "Istoric" },
-  { href: "/#preturi", label: "Prețuri Live" },
-  { href: "/contact", label: "Contact" },
-];
+import { LanguageSwitcher } from "@/i18n/LanguageSwitcher";
+import { useI18n } from "@/i18n/I18nProvider";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { t } = useI18n();
+
+  const links = [
+    { href: "/#despre", key: "nav.about" },
+    { href: "/cum-functioneaza", key: "nav.how" },
+    { href: "/istoric", key: "nav.history" },
+    { href: "/#preturi", key: "nav.prices" },
+    { href: "/contact", key: "nav.contact" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         <BrandMark />
 
         <nav className="hidden items-center gap-7 text-sm md:flex">
@@ -31,30 +34,34 @@ export function Navbar() {
                 href={link.href}
                 className={`transition-colors hover:text-foreground ${isCurrent ? "text-foreground" : "text-muted"}`}
               >
-                {link.label}
+                {t(link.key)}
               </Link>
             );
           })}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher />
           <Link
             href="/platform"
             className="rounded-full bg-accent px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
-            Conectare
+            {t("nav.login")}
           </Link>
         </div>
 
-        <button
-          type="button"
-          className="rounded-full border border-line px-3 py-1.5 text-sm md:hidden"
-          onClick={() => setOpen((value) => !value)}
-          aria-expanded={open}
-          aria-label="Deschide meniul"
-        >
-          Meniu
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
+          <button
+            type="button"
+            className="rounded-full border border-line px-3 py-1.5 text-sm"
+            onClick={() => setOpen((value) => !value)}
+            aria-expanded={open}
+            aria-label={t("nav.menu")}
+          >
+            {t("nav.menu")}
+          </button>
+        </div>
       </div>
 
       {open ? (
@@ -62,7 +69,7 @@ export function Navbar() {
           <div className="flex flex-col gap-3 text-sm">
             {links.map((link) => (
               <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="text-muted hover:text-foreground">
-                {link.label}
+                {t(link.key)}
               </Link>
             ))}
             <Link
@@ -70,7 +77,7 @@ export function Navbar() {
               onClick={() => setOpen(false)}
               className="mt-2 rounded-full bg-accent px-3.5 py-2 text-center text-white"
             >
-              Conectare
+              {t("nav.login")}
             </Link>
           </div>
         </div>

@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
+import { defaultLocale, isLocale } from "@/i18n/config";
+import { Providers } from "@/i18n/Providers";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,15 +16,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AlgorithmNode — Tranzacționare algoritmică automată",
+  title: "AlgorithmNode — Trading algorithmique automatisé",
   description:
-    "Boți de execuție acționați de agenți care citesc piața la microsecunde și urmăresc factorii care influențează prețurile.",
+    "Bots d’exécution actionnés par des agents qui lisent le marché à la microseconde et suivent les facteurs qui influencent les prix.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const jar = await cookies();
+  const raw = jar.get("an_locale")?.value;
+  const locale = isLocale(raw) ? raw : defaultLocale;
+
   return (
-    <html lang="ro" data-scroll-behavior="smooth" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full bg-background text-foreground">{children}</body>
+    <html lang={locale} data-scroll-behavior="smooth" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+      <body className="min-h-full bg-background text-foreground">
+        <Providers locale={locale}>{children}</Providers>
+      </body>
     </html>
   );
 }

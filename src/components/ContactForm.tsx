@@ -1,8 +1,18 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { useI18n } from "@/i18n/I18nProvider";
+
+const ERROR_KEYS: Record<string, string> = {
+  invalid_name: "form.errName",
+  invalid_email: "form.errEmail",
+  invalid_phone: "form.errPhone",
+  invalid_message: "form.errMessage",
+  save_failed: "form.errSave",
+};
 
 export function ContactForm() {
+  const { t } = useI18n();
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
   const [error, setError] = useState("");
 
@@ -29,14 +39,15 @@ export function ContactForm() {
       const json = await res.json();
       if (!res.ok) {
         setStatus("error");
-        setError(json.error || "Trimiterea a eșuat.");
+        const key = ERROR_KEYS[String(json.error)] ?? "form.fail";
+        setError(t(key));
         return;
       }
       setStatus("ok");
       form.reset();
     } catch {
       setStatus("error");
-      setError("Nu s-a putut contacta serverul.");
+      setError(t("form.server"));
     }
   }
 
@@ -49,7 +60,7 @@ export function ContactForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="mb-1.5 block text-xs text-muted">
-            Nume
+            {t("form.name")}
           </label>
           <input
             id="name"
@@ -62,7 +73,7 @@ export function ContactForm() {
         </div>
         <div>
           <label htmlFor="email" className="mb-1.5 block text-xs text-muted">
-            Email
+            {t("form.email")}
           </label>
           <input
             id="email"
@@ -75,7 +86,7 @@ export function ContactForm() {
       </div>
       <div>
         <label htmlFor="phone" className="mb-1.5 block text-xs text-muted">
-          Telefon
+          {t("form.phone")}
         </label>
         <input
           id="phone"
@@ -85,13 +96,13 @@ export function ContactForm() {
           minLength={8}
           maxLength={30}
           autoComplete="tel"
-          placeholder="+40 7xx xxx xxx"
+          placeholder={t("form.phonePh")}
           className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-accent/50"
         />
       </div>
       <div>
         <label htmlFor="message" className="mb-1.5 block text-xs text-muted">
-          Mesaj
+          {t("form.message")}
         </label>
         <textarea
           id="message"
@@ -100,7 +111,7 @@ export function ContactForm() {
           minLength={10}
           maxLength={5000}
           rows={7}
-          placeholder="Context tehnic, broker, volum estimat, întrebări despre API sau risc."
+          placeholder={t("form.msgPh")}
           className="w-full resize-y rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-accent/50"
         />
       </div>
@@ -109,11 +120,9 @@ export function ContactForm() {
         disabled={status === "sending"}
         className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white disabled:opacity-60"
       >
-        {status === "sending" ? "Se trimite…" : "Trimite"}
+        {status === "sending" ? t("form.sending") : t("form.send")}
       </button>
-      {status === "ok" ? (
-        <p className="text-sm text-accent">Mesajul a fost înregistrat. Vă contactăm în curând.</p>
-      ) : null}
+      {status === "ok" ? <p className="text-sm text-accent">{t("form.ok")}</p> : null}
       {status === "error" ? <p className="text-sm text-red-400">{error}</p> : null}
     </form>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useI18n } from "@/i18n/I18nProvider";
 
 const START_YEAR = 2021;
 const START_DAY = 11;
@@ -8,21 +9,6 @@ const START_CAPITAL = 20_000;
 const END_CAPITAL = 16_455_302.46;
 const TARGET_WIN_RATE = 0.8;
 const BEST_PCT = 0.74;
-const WEEKDAYS = ["Lu", "Ma", "Mi", "Jo", "Vi", "Sâ", "Du"];
-const MONTHS = [
-  "Ianuarie",
-  "Februarie",
-  "Martie",
-  "Aprilie",
-  "Mai",
-  "Iunie",
-  "Iulie",
-  "August",
-  "Septembrie",
-  "Octombrie",
-  "Noiembrie",
-  "Decembrie",
-];
 const VENUES = ["Binance", "XTB", "Plus500"] as const;
 
 type DayRecord = {
@@ -164,8 +150,8 @@ function buildLedger(today: Date) {
   return { records, byKey };
 }
 
-function money(value: number, digits = 2) {
-  return new Intl.NumberFormat("ro-RO", {
+function money(value: number, locale: string, digits = 2) {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "EUR",
     minimumFractionDigits: digits,
@@ -173,8 +159,8 @@ function money(value: number, digits = 2) {
   }).format(value);
 }
 
-function percent(value: number) {
-  const formatted = new Intl.NumberFormat("ro-RO", {
+function percent(value: number, locale: string) {
+  const formatted = new Intl.NumberFormat(locale, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value * 100);
@@ -193,6 +179,7 @@ function monthGrid(year: number, month: number) {
 }
 
 export function TradingCalendar() {
+  const { t, bcp47 } = useI18n();
   const [today, setToday] = useState<Date | null>(null);
   const [year, setYear] = useState(START_YEAR);
   const [month, setMonth] = useState(0);
@@ -243,31 +230,34 @@ export function TradingCalendar() {
     setSelected(null);
   }
 
+  const monthNames = Array.from({ length: 12 }, (_, i) => t(`cal.m${i}`));
+  const weekdays = Array.from({ length: 7 }, (_, i) => t(`cal.d${i}`));
+
   return (
     <div className="space-y-6">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <article className="rounded-xl border border-line bg-panel p-5">
-          <p className="text-xs tracking-wide text-muted uppercase">Capital inițial</p>
-          <p className="mt-2 font-mono text-xl">{money(START_CAPITAL)}</p>
-          <p className="mt-1 text-xs text-muted">11 ianuarie 2021</p>
+          <p className="text-xs tracking-wide text-muted uppercase">{t("cal.initial")}</p>
+          <p className="mt-2 font-mono text-xl">{money(START_CAPITAL, bcp47)}</p>
+          <p className="mt-1 text-xs text-muted">{t("cal.initialDate")}</p>
         </article>
         <article className="rounded-xl border border-line bg-panel p-5">
-          <p className="text-xs tracking-wide text-muted uppercase">Capital actual</p>
-          <p className="mt-2 font-mono text-xl text-gain">{money(latest.close)}</p>
-          <p className="mt-1 text-xs text-muted">Sold cu care tranzacționăm azi</p>
+          <p className="text-xs tracking-wide text-muted uppercase">{t("cal.current")}</p>
+          <p className="mt-2 font-mono text-xl text-gain">{money(latest.close, bcp47)}</p>
+          <p className="mt-1 text-xs text-muted">{t("cal.currentHint")}</p>
         </article>
         <article className="rounded-xl border border-line bg-panel p-5">
-          <p className="text-xs tracking-wide text-muted uppercase">Zile pe plus</p>
+          <p className="text-xs tracking-wide text-muted uppercase">{t("cal.winDays")}</p>
           <p className="mt-2 font-mono text-xl">
-            {new Intl.NumberFormat("ro-RO", { maximumFractionDigits: 1 }).format((wins / ledger.records.length) * 100)}%
+            {new Intl.NumberFormat(bcp47, { maximumFractionDigits: 1 }).format((wins / ledger.records.length) * 100)}%
           </p>
           <p className="mt-1 text-xs text-muted">
-            {wins} din {ledger.records.length} zile de execuție
+            {t("cal.winOf", { wins, total: ledger.records.length })}
           </p>
         </article>
         <article className="rounded-xl border border-line bg-panel p-5">
-          <p className="text-xs tracking-wide text-muted uppercase">Cea mai bună zi</p>
-          <p className="mt-2 font-mono text-xl text-gain">{percent(BEST_PCT)}</p>
+          <p className="text-xs tracking-wide text-muted uppercase">{t("cal.best")}</p>
+          <p className="mt-2 font-mono text-xl text-gain">{percent(BEST_PCT, bcp47)}</p>
           <p className="mt-1 text-xs text-muted">{best?.date ?? "—"}</p>
         </article>
       </div>
@@ -300,22 +290,22 @@ export function TradingCalendar() {
                 onClick={() => shiftMonth(-1)}
               className="rounded-md border border-line px-3 py-1.5 text-sm text-muted hover:text-foreground"
               >
-                Anterior
+                {t("cal.prev")}
               </button>
               <h2 className="text-lg font-medium tracking-tight">
-                {MONTHS[month]} {year}
+                {monthNames[month]} {year}
               </h2>
               <button
                 type="button"
                 onClick={() => shiftMonth(1)}
               className="rounded-md border border-line px-3 py-1.5 text-sm text-muted hover:text-foreground"
               >
-                Următor
+                {t("cal.next")}
               </button>
             </div>
 
             <div className="grid grid-cols-7 gap-1 text-center font-mono text-[11px] tracking-wide text-muted uppercase">
-              {WEEKDAYS.map((day) => (
+              {weekdays.map((day) => (
                 <div key={day} className="py-2">
                   {day}
                 </div>
@@ -343,7 +333,7 @@ export function TradingCalendar() {
                     className={`flex aspect-square flex-col items-center justify-center rounded-md border text-sm ${tone} ${isSelected ? "ring-1 ring-accent" : ""}`}
                   >
                     <span>{day}</span>
-                    {record ? <span className="text-[9px] leading-none opacity-80">{percent(record.pct)}</span> : null}
+                    {record ? <span className="text-[9px] leading-none opacity-80">{percent(record.pct, bcp47)}</span> : null}
                   </button>
                 );
               })}
@@ -353,50 +343,46 @@ export function TradingCalendar() {
 
         <aside className="space-y-4 lg:col-span-4">
           <article className="rounded-xl border border-line bg-panel p-5">
-            <p className="text-xs tracking-wide text-muted uppercase">Luna selectată</p>
+            <p className="text-xs tracking-wide text-muted uppercase">{t("cal.month")}</p>
             <p className={`mt-2 font-mono text-2xl ${monthPnl >= 0 ? "text-gain" : "text-loss"}`}>
-              {money(monthPnl)}
+              {money(monthPnl, bcp47)}
             </p>
             <p className="mt-2 text-sm text-muted">
-              {monthList.length} zile · {winDays} pozitive
+              {t("cal.monthStats", { days: monthList.length, wins: winDays })}
               {monthList.length ? ` · ${Math.round((winDays / monthList.length) * 100)}%` : ""}
             </p>
             <p className="mt-2 text-sm text-muted">
-              Flux net: {monthFlow >= 0 ? "depuneri" : "retrageri"} {money(Math.abs(monthFlow))}
+              {t(monthFlow >= 0 ? "cal.flowIn" : "cal.flowOut", { amount: money(Math.abs(monthFlow), bcp47) })}
             </p>
             {monthList.length ? (
-              <p className="mt-2 text-sm text-muted">Sold final lună: {money(monthList[monthList.length - 1].close)}</p>
+              <p className="mt-2 text-sm text-muted">{t("cal.monthClose", { amount: money(monthList[monthList.length - 1].close, bcp47) })}</p>
             ) : null}
           </article>
           <article className="rounded-xl border border-line bg-panel p-5">
-            <p className="text-xs tracking-wide text-muted uppercase">Ziua selectată</p>
+            <p className="text-xs tracking-wide text-muted uppercase">{t("cal.day")}</p>
             {selected ? (
               <div className="mt-3 space-y-2 text-sm">
                 <p className="font-medium">
                   {selected.date}
-                  {selected.best ? " · cea mai bună zi" : ""}
+                  {selected.best ? t("cal.bestTag") : ""}
                 </p>
                 <p className="text-muted">
-                  {selected.venue} · {selected.trades} ordine
+                  {selected.venue} · {t("cal.orders", { count: selected.trades })}
                 </p>
                 <p className={`font-mono ${selected.pnl >= 0 ? "text-gain" : "text-loss"}`}>
-                  Rezultat {percent(selected.pct)} · {money(selected.pnl)}
+                  {t("cal.result", { pct: percent(selected.pct, bcp47), amount: money(selected.pnl, bcp47) })}
                 </p>
-                <p className="text-muted">Deschidere: {money(selected.open)}</p>
+                <p className="text-muted">{t("cal.open", { amount: money(selected.open, bcp47) })}</p>
                 <p className="text-muted">
-                  {selected.flow >= 0 ? "Depunere" : "Retragere"}: {money(Math.abs(selected.flow))}
+                  {t(selected.flow >= 0 ? "cal.deposit" : "cal.withdraw", { amount: money(Math.abs(selected.flow), bcp47) })}
                 </p>
-                <p className="font-mono">Închidere: {money(selected.close)}</p>
+                <p className="font-mono">{t("cal.close", { amount: money(selected.close, bcp47) })}</p>
               </div>
             ) : (
-              <p className="mt-3 text-sm text-muted">Alege o zi din calendar pentru detaliu.</p>
+              <p className="mt-3 text-sm text-muted">{t("cal.pick")}</p>
             )}
           </article>
-          <p className="text-xs leading-5 text-muted">
-            Start 20.000,00 EUR pe 11 ianuarie 2021. Circa 80% zile pozitive. +74% a fost o zi de început, pe
-            capital mic; ulterior randamentul zilnic scade odată cu soldul. Depuneri și retrageri operaționale, sold
-            actual 16.455.302,46 EUR. Performanțele anterioare nu constituie o garanție pentru rezultate viitoare.
-          </p>
+          <p className="text-xs leading-5 text-muted">{t("cal.note")}</p>
         </aside>
       </div>
     </div>

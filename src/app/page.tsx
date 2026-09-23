@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { About } from "@/components/About";
 import { Hero } from "@/components/Hero";
+import { HomeCards } from "@/components/HomeCards";
 import { LivePrices } from "@/components/LivePrices";
 import { SiteShell } from "@/components/SiteShell";
 
@@ -9,31 +9,7 @@ export default function Home() {
     <SiteShell>
       <Hero />
       <LivePrices />
-      <section className="border-t border-line">
-        <div className="mx-auto grid max-w-6xl gap-4 px-4 py-16 sm:px-6 md:grid-cols-3">
-          <Link href="/cum-functioneaza" className="rounded-xl border border-line bg-panel p-6 transition-colors hover:border-accent/30">
-            <p className="font-mono text-xs text-accent">01</p>
-            <h2 className="mt-3 text-xl font-medium tracking-tight">Cum funcționează</h2>
-            <p className="mt-2 text-sm leading-6 text-muted">
-              Boți acționați de agenți care citesc piața la microsecunde.
-            </p>
-          </Link>
-          <Link href="/istoric" className="rounded-xl border border-line bg-panel p-6 transition-colors hover:border-accent/30">
-            <p className="font-mono text-xs text-accent">02</p>
-            <h2 className="mt-3 text-xl font-medium tracking-tight">Istoric tranzacționări</h2>
-            <p className="mt-2 text-sm leading-6 text-muted">
-              De la 20.000 EUR în 2021 la 16,45 mil. EUR azi. ~80% zile pe plus, vârf +74% la început.
-            </p>
-          </Link>
-          <Link href="/contact" className="rounded-xl border border-line bg-panel p-6 transition-colors hover:border-accent/30">
-            <p className="font-mono text-xs text-accent">03</p>
-            <h2 className="mt-3 text-xl font-medium tracking-tight">Contact</h2>
-            <p className="mt-2 text-sm leading-6 text-muted">
-              Acces la platformă, integrare API sau întrebări despre risc — fără pitch agresiv.
-            </p>
-          </Link>
-        </div>
-      </section>
+      <HomeCards />
       <About />
     </SiteShell>
   );

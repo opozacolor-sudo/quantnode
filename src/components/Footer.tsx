@@ -1,38 +1,35 @@
+"use client";
+
 import Link from "next/link";
 import { BrandMark } from "@/components/BrandMark";
+import { useI18n } from "@/i18n/I18nProvider";
 
 export function Footer() {
+  const { t } = useI18n();
+
   return (
     <footer className="border-t border-line pb-4">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="grid gap-8 md:grid-cols-2">
           <div>
             <BrandMark />
-            <p className="mt-3 text-sm text-muted">
-              Tranzacționare automată cu agenți de piață și boți de execuție.
-            </p>
+            <p className="mt-3 text-sm text-muted">{t("footer.tagline")}</p>
             <nav className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted">
               <Link href="/cum-functioneaza" className="hover:text-foreground">
-                Cum funcționează
+                {t("nav.how")}
               </Link>
               <Link href="/istoric" className="hover:text-foreground">
-                Istoric
+                {t("nav.history")}
               </Link>
               <Link href="/contact" className="hover:text-foreground">
-                Contact
+                {t("nav.contact")}
               </Link>
             </nav>
-            <p className="mt-4 text-sm text-muted">Aplicații iOS și Android — în curând.</p>
+            <p className="mt-4 text-sm text-muted">{t("footer.apps")}</p>
           </div>
-          <p className="text-xs leading-6 text-muted">
-            Disclaimer: Tranzacționarea pe piețele financiare, inclusiv crypto și mărfuri, implică un risc
-            substanțial de pierdere, până la întreaga valoare a capitalului angajat. Performanțele anterioare
-            nu constituie o garanție pentru rezultate viitoare. AlgorithmNode furnizează tehnologie de
-            execuție algoritmică și nu oferă consultanță de investiții. Datele de preț sunt informative și
-            pot fi întârziate sau incomplete.
-          </p>
+          <p className="text-xs leading-6 text-muted">{t("footer.disclaimer")}</p>
         </div>
-        <p className="mt-10 text-xs text-muted">© 2026 AlgorithmNode. Toate drepturile rezervate.</p>
+        <p className="mt-10 text-xs text-muted">{t("footer.rights")}</p>
       </div>
     </footer>
   );
