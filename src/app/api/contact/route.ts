@@ -5,7 +5,7 @@ import { defaultLocale, isLocale, localeCookie, type Locale } from "@/i18n/confi
 import { randomPassword } from "@/lib/password";
 import { supabase } from "@/lib/supabase";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
-import { welcomeEmail } from "@/lib/welcome-email";
+import { syncAffinityLead } from "@/lib/affinity";
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -58,6 +58,12 @@ export async function POST(request: Request) {
     if (error) {
       console.error(error);
       return NextResponse.json({ error: "save_failed" }, { status: 500 });
+    }
+
+    try {
+      await syncAffinityLead({ name, email, phone, message, locale });
+    } catch (crmError) {
+      console.error(crmError);
     }
 
     if (!createAccount) {
