@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase-admin";
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Adresa de email nu este validă." }, { status: 400 });
     }
 
-    const { error } = await supabase.from("access_requests").insert({ email });
+    const { error } = await getSupabaseAdmin().from("access_requests").insert({ email });
 
     if (error) {
       console.error(error);

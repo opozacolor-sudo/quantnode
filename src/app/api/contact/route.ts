@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { defaultLocale, isLocale, localeCookie, type Locale } from "@/i18n/config";
 import { randomPassword } from "@/lib/password";
-import { supabase } from "@/lib/supabase";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { syncAffinityLead } from "@/lib/affinity";
 import { welcomeEmail } from "@/lib/welcome-email";
@@ -54,7 +53,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "invalid_message" }, { status: 400 });
     }
 
-    const { error } = await supabase.from("contact_messages").insert({ name, email, phone, message });
+    const { error } = await getSupabaseAdmin().from("contact_messages").insert({ name, email, phone, message });
 
     if (error) {
       console.error(error);
