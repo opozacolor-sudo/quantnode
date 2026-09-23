@@ -39,8 +39,9 @@ export function Hero() {
         <p className="mb-6 text-sm text-muted">SaaS · API-first · fără custodie</p>
 
         <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-6xl lg:text-7xl">
-          Infrastructură de tranzacționare pentru piețe globale.
+          Investește azi pentru un mâine mai bun.
         </h1>
+        <p className="mt-3 text-sm tracking-wide text-muted sm:text-base">Invest today for a better tomorrow.</p>
 
         <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
           AlgorithmNode execută automat, prin agenți care citesc piața la microsecunde și boți care
