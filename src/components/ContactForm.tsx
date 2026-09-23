@@ -15,6 +15,7 @@ export function ContactForm() {
     const payload = {
       name: String(new FormData(form).get("name") ?? ""),
       email: String(new FormData(form).get("email") ?? ""),
+      phone: String(new FormData(form).get("phone") ?? ""),
       message: String(new FormData(form).get("message") ?? ""),
       company: String(new FormData(form).get("company") ?? ""),
     };
@@ -71,6 +72,22 @@ export function ContactForm() {
             className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent/50"
           />
         </div>
+      </div>
+      <div>
+        <label htmlFor="phone" className="mb-1.5 block text-xs text-muted">
+          Telefon
+        </label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          required
+          minLength={8}
+          maxLength={30}
+          autoComplete="tel"
+          placeholder="+40 7xx xxx xxx"
+          className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-accent/50"
+        />
       </div>
       <div>
         <label htmlFor="message" className="mb-1.5 block text-xs text-muted">

@@ -10,6 +10,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const name = String(body.name ?? "").trim();
     const email = String(body.email ?? "").trim().toLowerCase();
+    const phone = String(body.phone ?? "").trim();
     const message = String(body.message ?? "").trim();
     const honeypot = String(body.company ?? "").trim();
 
@@ -25,11 +26,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Adresa de email nu este validă." }, { status: 400 });
     }
 
+    const digits = phone.replace(/\D/g, "");
+    if (phone.length < 8 || phone.length > 30 || digits.length < 8) {
+      return NextResponse.json({ error: "Introduceți un număr de telefon valid." }, { status: 400 });
+    }
+
     if (message.length < 10 || message.length > 5000) {
       return NextResponse.json({ error: "Mesajul trebuie să aibă între 10 și 5000 de caractere." }, { status: 400 });
     }
 
-    const { error } = await supabase.from("contact_messages").insert({ name, email, message });
+    const { error } = await supabase.from("contact_messages").insert({ name, email, phone, message });
 
     if (error) {
       console.error(error);
