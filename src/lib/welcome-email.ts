@@ -75,17 +75,6 @@ const copy: Record<Locale, Copy> = {
     login: "Anmelden",
     footer: "Bewahren Sie diese E-Mail auf. Das Passwort können Sie nach der ersten Anmeldung mit Hilfe des Spezialisten ändern.",
   },
-  ro: {
-    subject: "Bine ați venit la AlgorithmNode — datele de conectare",
-    greeting: (name) => `Bună ${name},`,
-    intro:
-      "Felicitări că faci parte din echipa AlgorithmNode. Urmează să fii contactat de un specialist din echipa noastră pentru a te ghida pas cu pas.",
-    credentialsTitle: "Mai jos datele de conectare:",
-    emailLabel: "Email",
-    passwordLabel: "Parolă",
-    login: "Conectare",
-    footer: "Păstrați acest email. Parola poate fi schimbată după prima conectare, cu ajutorul specialistului.",
-  },
 };
 
 export function welcomeEmail(params: {
