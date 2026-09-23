@@ -6,6 +6,7 @@ import { randomPassword } from "@/lib/password";
 import { supabase } from "@/lib/supabase";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 import { syncAffinityLead } from "@/lib/affinity";
+import { welcomeEmail } from "@/lib/welcome-email";
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
