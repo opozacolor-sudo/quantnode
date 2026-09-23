@@ -47,6 +47,11 @@ export const dictionaries: Record<Locale, Dict> = {
     "footer.disclaimer":
       "Avertissement : le trading sur les marchés financiers, y compris le crypto et les matières premières, comporte un risque substantiel de perte, jusqu'à la totalité du capital engagé. Les performances passées ne préjugent pas des résultats futurs. AlgorithmNode fournit une technologie d'exécution algorithmique et ne propose pas de conseil en investissement. Les données de prix sont indicatives et peuvent être retardées ou incomplètes.",
     "footer.rights": "© 2026 AlgorithmNode. Tous droits réservés.",
+    "footer.terms": "Conditions générales",
+    "footer.privacy": "Politique de confidentialité",
+    "cookie.body":
+      "Nous utilisons uniquement des traceurs strictement nécessaires (langue, session). En continuant, vous acceptez leur dépôt. Détails :",
+    "cookie.accept": "Compris",
     "prices.kicker": "Marché",
     "prices.title": "Prix en direct",
     "prices.body":
@@ -157,6 +162,8 @@ export const dictionaries: Record<Locale, Dict> = {
     "form.send": "Envoyer",
     "form.sending": "Envoi…",
     "form.ok": "Le message a été enregistré. Nous vous contactons bientôt.",
+    "form.legalStart": "J’ai lu et j’accepte les",
+    "form.legalMid": " et la ",
     "form.fail": "L'envoi a échoué.",
     "form.server": "Impossible de joindre le serveur.",
     "form.errName": "Le nom doit contenir entre 2 et 120 caractères.",
@@ -229,6 +236,11 @@ export const dictionaries: Record<Locale, Dict> = {
     "footer.disclaimer":
       "Disclaimer: trading in financial markets, including crypto and commodities, involves a substantial risk of loss, up to the full capital committed. Past performance is not a guarantee of future results. AlgorithmNode provides algorithmic execution technology and does not offer investment advice. Price data is indicative and may be delayed or incomplete.",
     "footer.rights": "© 2026 AlgorithmNode. All rights reserved.",
+    "footer.terms": "Terms and conditions",
+    "footer.privacy": "Privacy policy",
+    "cookie.body":
+      "We use strictly necessary tracers only (language, session). By continuing, you accept them. Details:",
+    "cookie.accept": "Got it",
     "prices.kicker": "Market",
     "prices.title": "Live prices",
     "prices.body":
@@ -337,6 +349,8 @@ export const dictionaries: Record<Locale, Dict> = {
     "form.send": "Send",
     "form.sending": "Sending…",
     "form.ok": "The message was recorded. We will contact you soon.",
+    "form.legalStart": "I have read and accept the",
+    "form.legalMid": " and the ",
     "form.fail": "Sending failed.",
     "form.server": "Could not reach the server.",
     "form.errName": "The name must be between 2 and 120 characters.",
@@ -409,6 +423,11 @@ export const dictionaries: Record<Locale, Dict> = {
     "footer.disclaimer":
       "Aviso: operar en los mercados financieros, incluido cripto y materias primas, implica un riesgo sustancial de pérdida, hasta la totalidad del capital comprometido. Los resultados pasados no garantizan resultados futuros. AlgorithmNode proporciona tecnología de ejecución algorítmica y no ofrece asesoramiento de inversión. Los datos de precios son indicativos y pueden estar retrasados o incompletos.",
     "footer.rights": "© 2026 AlgorithmNode. Todos los derechos reservados.",
+    "footer.terms": "Condiciones generales",
+    "footer.privacy": "Política de privacidad",
+    "cookie.body":
+      "Usamos únicamente trazadores estrictamente necesarios (idioma, sesión). Al continuar, acepta su uso. Detalles:",
+    "cookie.accept": "Entendido",
     "prices.kicker": "Mercado",
     "prices.title": "Precios en vivo",
     "prices.body":
@@ -517,6 +536,8 @@ export const dictionaries: Record<Locale, Dict> = {
     "form.send": "Enviar",
     "form.sending": "Enviando…",
     "form.ok": "El mensaje se ha registrado. Le contactaremos pronto.",
+    "form.legalStart": "He leído y acepto las",
+    "form.legalMid": " y la ",
     "form.fail": "El envío ha fallado.",
     "form.server": "No se pudo contactar con el servidor.",
     "form.errName": "El nombre debe tener entre 2 y 120 caracteres.",
@@ -589,6 +610,11 @@ export const dictionaries: Record<Locale, Dict> = {
     "footer.disclaimer":
       "Avvertenza: il trading sui mercati finanziari, incluso crypto e materie prime, comporta un rischio sostanziale di perdita, fino all'intero capitale impiegato. Le performance passate non sono garanzia di risultati futuri. AlgorithmNode fornisce tecnologia di esecuzione algoritmica e non offre consulenza di investimento. I dati di prezzo sono indicativi e possono essere ritardati o incompleti.",
     "footer.rights": "© 2026 AlgorithmNode. Tutti i diritti riservati.",
+    "footer.terms": "Condizioni generali",
+    "footer.privacy": "Informativa sulla privacy",
+    "cookie.body":
+      "Usiamo solo tracciatori strettamente necessari (lingua, sessione). Proseguendo, ne accettate l’uso. Dettagli:",
+    "cookie.accept": "Ho capito",
     "prices.kicker": "Mercato",
     "prices.title": "Prezzi live",
     "prices.body":
@@ -697,6 +723,8 @@ export const dictionaries: Record<Locale, Dict> = {
     "form.send": "Invia",
     "form.sending": "Invio…",
     "form.ok": "Il messaggio è stato registrato. Vi contatteremo a breve.",
+    "form.legalStart": "Ho letto e accetto le",
+    "form.legalMid": " e l’",
     "form.fail": "Invio non riuscito.",
     "form.server": "Impossibile contattare il server.",
     "form.errName": "Il nome deve contenere tra 2 e 120 caratteri.",
@@ -769,6 +797,11 @@ export const dictionaries: Record<Locale, Dict> = {
     "footer.disclaimer":
       "Hinweis: Der Handel an Finanzmärkten, einschließlich Krypto und Rohstoffen, birgt ein erhebliches Verlustrisiko bis zum gesamten eingesetzten Kapital. Vergangene Wertentwicklungen sind keine Garantie für künftige Ergebnisse. AlgorithmNode stellt Technologie zur algorithmischen Ausführung bereit und bietet keine Anlageberatung. Kursdaten sind indikativ und können verzögert oder unvollständig sein.",
     "footer.rights": "© 2026 AlgorithmNode. Alle Rechte vorbehalten.",
+    "footer.terms": "Nutzungsbedingungen",
+    "footer.privacy": "Datenschutzerklärung",
+    "cookie.body":
+      "Wir verwenden nur unbedingt erforderliche Tracer (Sprache, Sitzung). Mit dem Fortfahren akzeptieren Sie deren Einsatz. Details:",
+    "cookie.accept": "Verstanden",
     "prices.kicker": "Markt",
     "prices.title": "Live-Kurse",
     "prices.body":
@@ -877,6 +910,8 @@ export const dictionaries: Record<Locale, Dict> = {
     "form.send": "Senden",
     "form.sending": "Wird gesendet…",
     "form.ok": "Die Nachricht wurde gespeichert. Wir kontaktieren Sie in Kürze.",
+    "form.legalStart": "Ich habe gelesen und akzeptiere die",
+    "form.legalMid": " und die ",
     "form.fail": "Senden fehlgeschlagen.",
     "form.server": "Server nicht erreichbar.",
     "form.errName": "Der Name muss zwischen 2 und 120 Zeichen lang sein.",
@@ -949,6 +984,11 @@ export const dictionaries: Record<Locale, Dict> = {
     "footer.disclaimer":
       "Disclaimer: Tranzacționarea pe piețele financiare, inclusiv crypto și mărfuri, implică un risc substanțial de pierdere, până la întreaga valoare a capitalului angajat. Performanțele anterioare nu constituie o garanție pentru rezultate viitoare. AlgorithmNode furnizează tehnologie de execuție algoritmică și nu oferă consultanță de investiții. Datele de preț sunt informative și pot fi întârziate sau incomplete.",
     "footer.rights": "© 2026 AlgorithmNode. Toate drepturile rezervate.",
+    "footer.terms": "Termeni și condiții",
+    "footer.privacy": "Politică de confidențialitate",
+    "cookie.body":
+      "Folosim doar urmăritori strict necesari (limbă, sesiune). Continuând, acceptați depunerea lor. Detalii:",
+    "cookie.accept": "Am înțeles",
     "prices.kicker": "Piață",
     "prices.title": "Prețuri live",
     "prices.body":
@@ -1058,6 +1098,8 @@ export const dictionaries: Record<Locale, Dict> = {
     "form.send": "Trimite",
     "form.sending": "Se trimite…",
     "form.ok": "Mesajul a fost înregistrat. Vă contactăm în curând.",
+    "form.legalStart": "Am citit și accept",
+    "form.legalMid": " și ",
     "form.fail": "Trimiterea a eșuat.",
     "form.server": "Nu s-a putut contacta serverul.",
     "form.errName": "Numele trebuie să aibă între 2 și 120 de caractere.",

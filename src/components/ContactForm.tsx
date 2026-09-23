@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
 import { useI18n } from "@/i18n/I18nProvider";
 
 const ERROR_KEYS: Record<string, string> = {
@@ -115,6 +116,20 @@ export function ContactForm() {
           className="w-full resize-y rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-accent/50"
         />
       </div>
+      <label className="flex items-start gap-2 text-xs leading-5 text-muted">
+        <input type="checkbox" name="legal" required className="mt-0.5" />
+        <span>
+          {t("form.legalStart")}{" "}
+          <Link href="/conditions-generales" className="text-accent hover:underline">
+            {t("footer.terms")}
+          </Link>
+          {t("form.legalMid")}
+          <Link href="/confidentialite" className="text-accent hover:underline">
+            {t("footer.privacy")}
+          </Link>
+          .
+        </span>
+      </label>
       <button
         type="submit"
         disabled={status === "sending"}

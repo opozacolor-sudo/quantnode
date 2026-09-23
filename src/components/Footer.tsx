@@ -27,7 +27,17 @@ export function Footer() {
             </nav>
             <p className="mt-4 text-sm text-muted">{t("footer.apps")}</p>
           </div>
-          <p className="text-xs leading-6 text-muted">{t("footer.disclaimer")}</p>
+          <div>
+            <p className="text-xs leading-6 text-muted">{t("footer.disclaimer")}</p>
+            <nav className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted">
+              <Link href="/conditions-generales" className="hover:text-foreground">
+                {t("footer.terms")}
+              </Link>
+              <Link href="/confidentialite" className="hover:text-foreground">
+                {t("footer.privacy")}
+              </Link>
+            </nav>
+          </div>
         </div>
         <p className="mt-10 text-xs text-muted">{t("footer.rights")}</p>
       </div>

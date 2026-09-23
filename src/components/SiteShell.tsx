@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { ComingSoonApps } from "@/components/ComingSoonApps";
+import { CookieNotice } from "@/components/CookieNotice";
 import { Footer } from "@/components/Footer";
 import { MarketsTicker } from "@/components/MarketsTicker";
 import { Navbar } from "@/components/Navbar";
@@ -11,6 +12,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <main className="flex-1">{children}</main>
       <ComingSoonApps />
       <Footer />
+      <CookieNotice />
       <MarketsTicker />
     </div>
   );
