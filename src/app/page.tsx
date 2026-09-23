@@ -16,14 +16,3 @@ export default function Home() {
     </SiteShell>
   );
 }
-
-export default function Home() {
-  return (
-    <SiteShell>
-      <Hero />
-      <LivePrices />
-      <HomeCards />
-      <About />
-    </SiteShell>
-  );
-}
