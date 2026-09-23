@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   title: "AlgorithmNode — Trading algorithmique automatisé",
   description:
     "Bots d’exécution actionnés par des agents qui lisent le marché à la microseconde et suivent les facteurs qui influencent les prix.",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
+    apple: "/apple-icon",
+  },
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
