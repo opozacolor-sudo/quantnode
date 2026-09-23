@@ -5,7 +5,7 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BrandMark } from "@/components/BrandMark";
 import { ContactForm } from "@/components/ContactForm";
-import { isAdminSession } from "@/lib/admin";
+import { PasswordDialog } from "@/components/PasswordDialog";
 import { getSupabaseBrowser } from "@/lib/supabase-browser";
 
 type Wallet = { available: number; currency: string };
@@ -179,6 +179,7 @@ export default function DashboardPage() {
           <BrandMark href="/dashboard" />
           <div className="flex items-center gap-3 text-sm">
             <span className="hidden text-muted sm:inline">{email}</span>
+            <PasswordDialog email={email} />
             <Link href="/" className="text-muted hover:text-foreground">
               Site
             </Link>
