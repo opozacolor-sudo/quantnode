@@ -28,6 +28,13 @@ function typeLabel(type: LedgerRow["type"]) {
   return "Tranzacție";
 }
 
+function statusLabel(status: string) {
+  if (status === "pending") return "În așteptare";
+  if (status === "rejected") return "Respinsă";
+  if (status === "completed") return "Finalizat";
+  return status;
+}
+
 export default function DashboardPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -57,8 +64,8 @@ export default function DashboardPage() {
       supabase.from("ledger").select("id, type, amount, status, note, created_at").order("created_at", { ascending: false }).limit(50),
     ]);
 
-    if (walletRes.data) setWallet(walletRes.data);
-    if (ledgerRes.data) setRows(ledgerRes.data as LedgerRow[]);
+    setWallet(walletRes.data ?? { available: 0, currency: "EUR" });
+    setRows((ledgerRes.data as LedgerRow[]) ?? []);
 
     if (settingsRes.data) {
       setSettings(settingsRes.data);
@@ -99,7 +106,11 @@ export default function DashboardPage() {
       return;
     }
     event.currentTarget.reset();
-    setMessage(type === "deposit" ? "Depunerea a fost înregistrată." : "Retragerea a fost înregistrată. Procesare în maxim 24 de ore.");
+    setMessage(
+      type === "deposit"
+        ? "Cererea de depunere a fost înregistrată. Soldul se actualizează după confirmare."
+        : "Cererea de retragere a fost înregistrată. Procesare în maxim 24 de ore.",
+    );
     await load();
   }
 
@@ -170,7 +181,9 @@ export default function DashboardPage() {
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             <article className="rounded-xl border border-line bg-panel p-5">
               <p className="text-xs text-muted">Sold disponibil</p>
-              <p className="mt-2 font-mono text-2xl">{wallet ? money(Number(wallet.available), wallet.currency) : "—"}</p>
+              <p className="mt-2 font-mono text-2xl">
+                {money(Number(wallet?.available ?? 0), wallet?.currency ?? "EUR")}
+              </p>
             </article>
             <article className="rounded-xl border border-line bg-panel p-5">
               <p className="text-xs text-muted">Stop-Loss</p>
@@ -186,7 +199,7 @@ export default function DashboardPage() {
         <section className="grid gap-4 lg:grid-cols-2">
           <form onSubmit={(event) => onMove("deposit", event)} className="rounded-xl border border-line bg-panel p-6">
             <h2 className="text-lg font-medium">Depunere</h2>
-            <p className="mt-1 text-sm text-muted">Adaugă fonduri în portofel (EUR).</p>
+            <p className="mt-1 text-sm text-muted">Trimite o cerere de depunere în EUR. Soldul crește doar după confirmare.</p>
             <label className="mt-4 mb-1.5 block text-xs text-muted" htmlFor="deposit-amount">
               Sumă
             </label>
@@ -290,17 +303,25 @@ export default function DashboardPage() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row) => (
-                  <tr key={row.id} className="border-t border-line">
-                    <td className="px-4 py-3 text-muted">{new Date(row.created_at).toLocaleString("ro-RO")}</td>
-                    <td className="px-4 py-3">{typeLabel(row.type)}</td>
-                    <td className="px-4 py-3 text-muted">{row.note ?? "—"}</td>
-                    <td className={`px-4 py-3 text-right font-mono ${Number(row.amount) >= 0 ? "text-accent" : "text-red-400"}`}>
-                      {money(Number(row.amount))}
+                {rows.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-4 py-8 text-center text-sm text-muted">
+                      Nicio mișcare încă. Soldul este 0,00 EUR până la o depunere confirmată.
                     </td>
-                    <td className="px-4 py-3 text-right text-muted">{row.status}</td>
                   </tr>
-                ))}
+                ) : (
+                  rows.map((row) => (
+                    <tr key={row.id} className="border-t border-line">
+                      <td className="px-4 py-3 text-muted">{new Date(row.created_at).toLocaleString("ro-RO")}</td>
+                      <td className="px-4 py-3">{typeLabel(row.type)}</td>
+                      <td className="px-4 py-3 text-muted">{row.note ?? "—"}</td>
+                      <td className={`px-4 py-3 text-right font-mono ${Number(row.amount) >= 0 ? "text-accent" : "text-red-400"}`}>
+                        {money(Number(row.amount))}
+                      </td>
+                      <td className="px-4 py-3 text-right text-muted">{statusLabel(row.status)}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
