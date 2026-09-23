@@ -76,7 +76,7 @@ export function ContactForm({
       : "space-y-4 rounded-xl border border-line bg-panel p-6 sm:p-8";
 
   return (
-    <form key={`${defaultEmail}|${defaultMessage}`} onSubmit={onSubmit} className={shell}>
+    <form key={`${defaultEmail}|${defaultMessage}|${locale}`} onSubmit={onSubmit} className={shell}>
       {variant === "page" ? <p className="text-sm leading-6 text-muted">{t("form.provision")}</p> : null}
       <div className="hidden">
         <label htmlFor={fid("company")}>Company</label>
@@ -137,7 +137,7 @@ export function ContactForm({
           minLength={10}
           maxLength={5000}
           rows={7}
-          defaultValue={defaultMessage}
+          defaultValue={defaultMessage || t("form.msgDefault")}
           placeholder={t("form.msgPh")}
           className="w-full resize-y rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-accent/50"
         />
