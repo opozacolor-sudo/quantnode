@@ -10,6 +10,7 @@ const ERROR_KEYS: Record<string, string> = {
   invalid_phone: "form.errPhone",
   invalid_message: "form.errMessage",
   save_failed: "form.errSave",
+  mail_failed: "form.errMail",
 };
 
 type ContactFormProps = {
@@ -17,6 +18,7 @@ type ContactFormProps = {
   defaultMessage?: string;
   idPrefix?: string;
   variant?: "page" | "embedded";
+  createAccount?: boolean;
 };
 
 export function ContactForm({
@@ -24,9 +26,10 @@ export function ContactForm({
   defaultMessage = "",
   idPrefix = "",
   variant = "page",
+  createAccount = true,
 }: ContactFormProps) {
-  const { t } = useI18n();
-  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
+  const { t, locale } = useI18n();
+  const [status, setStatus] = useState<"idle" | "sending" | "ok" | "existing" | "error">("idle");
   const [error, setError] = useState("");
   const fid = (name: string) => `${idPrefix}${name}`;
 
@@ -42,6 +45,8 @@ export function ContactForm({
       phone: String(new FormData(form).get("phone") ?? ""),
       message: String(new FormData(form).get("message") ?? ""),
       company: String(new FormData(form).get("company") ?? ""),
+      locale,
+      createAccount,
     };
 
     try {
@@ -57,7 +62,7 @@ export function ContactForm({
         setError(t(key));
         return;
       }
-      setStatus("ok");
+      setStatus(json.existing ? "existing" : "ok");
       form.reset();
     } catch {
       setStatus("error");
@@ -72,6 +77,7 @@ export function ContactForm({
 
   return (
     <form key={`${defaultEmail}|${defaultMessage}`} onSubmit={onSubmit} className={shell}>
+      {variant === "page" ? <p className="text-sm leading-6 text-muted">{t("form.provision")}</p> : null}
       <div className="hidden">
         <label htmlFor={fid("company")}>Company</label>
         <input id={fid("company")} name="company" tabIndex={-1} autoComplete="off" />
@@ -158,6 +164,7 @@ export function ContactForm({
         {status === "sending" ? t("form.sending") : t("form.send")}
       </button>
       {status === "ok" ? <p className="text-sm text-accent">{t("form.ok")}</p> : null}
+      {status === "existing" ? <p className="text-sm text-accent">{t("form.okExisting")}</p> : null}
       {status === "error" ? <p className="text-sm text-red-400">{error}</p> : null}
     </form>
   );

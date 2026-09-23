@@ -387,6 +387,7 @@ export default function DashboardPage() {
               <ContactForm
                 variant="embedded"
                 idPrefix="deposit-"
+                createAccount={false}
                 defaultEmail={email}
                 defaultMessage={`Solicitare depunere: ${money(depositConsult.amount)}. Doresc să discut cu un consultant despre ce înseamnă depunerea, riscurile și pașii următori. Cont: ${email}.`}
               />
