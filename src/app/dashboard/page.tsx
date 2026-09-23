@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { BrandMark } from "@/components/BrandMark";
 import { ContactForm } from "@/components/ContactForm";
 import { PasswordDialog } from "@/components/PasswordDialog";
+import { isAdminSession } from "@/lib/admin";
 import { getSupabaseBrowser } from "@/lib/supabase-browser";
 
 type Wallet = { available: number; currency: string };
