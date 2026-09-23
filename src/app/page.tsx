@@ -15,7 +15,7 @@ export default function Home() {
             <p className="font-mono text-xs text-accent">01</p>
             <h2 className="mt-3 text-xl font-medium tracking-tight">Cum funcționează</h2>
             <p className="mt-2 text-sm leading-6 text-muted">
-              Binance, XTB, Plus500 · boți pe date de piață · dashboard și retrageri în 24h.
+              Boți acționați de agenți care citesc piața la microsecunde.
             </p>
           </Link>
           <Link href="/istoric" className="rounded-xl border border-line bg-panel p-6 transition-colors hover:border-accent/30">

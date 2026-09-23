@@ -3,7 +3,7 @@ import { SiteShell } from "@/components/SiteShell";
 import { TradingCalendar } from "@/components/TradingCalendar";
 
 export const metadata: Metadata = {
-  title: "Istoric tranzacționări — QuantNode",
+  title: "Istoric tranzacționări — AlgorithmNode",
   description: "Calendar de execuție algoritmică de la 2021 până în prezent, pe Binance, XTB și Plus500.",
 };
 

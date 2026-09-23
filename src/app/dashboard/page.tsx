@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { BrandMark } from "@/components/BrandMark";
+import { isAdminSession } from "@/lib/admin";
 import { getSupabaseBrowser } from "@/lib/supabase-browser";
 
 type Wallet = { available: number; currency: string };
@@ -41,6 +43,10 @@ export default function DashboardPage() {
     const { data: sessionData } = await supabase.auth.getSession();
     if (!sessionData.session) {
       router.replace("/platform");
+      return;
+    }
+    if (isAdminSession(sessionData.session.user)) {
+      router.replace("/admin");
       return;
     }
     setEmail(sessionData.session.user.email ?? "");
@@ -141,12 +147,7 @@ export default function DashboardPage() {
     <div className="min-h-full bg-background">
       <header className="sticky top-0 z-40 border-b border-line bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/dashboard" className="flex items-center gap-2 font-medium">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-accent font-mono text-xs text-white">
-              QN
-            </span>
-            Dashboard
-          </Link>
+          <BrandMark href="/dashboard" />
           <div className="flex items-center gap-3 text-sm">
             <span className="hidden text-muted sm:inline">{email}</span>
             <Link href="/" className="text-muted hover:text-foreground">

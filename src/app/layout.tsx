@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QuantNode — Infrastructură de tranzacționare algoritmică",
+  title: "AlgorithmNode — Tranzacționare algoritmică automată",
   description:
-    "Platformă SaaS pentru execuție algoritmică prin API. Fără custodie de fonduri. Control total, permisiuni stricte de trading.",
+    "Boți de execuție acționați de agenți care citesc piața la microsecunde și urmăresc factorii care influențează prețurile.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

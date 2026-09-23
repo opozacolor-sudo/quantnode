@@ -60,7 +60,7 @@ async function fetchYahoo(symbol: string, id: string, name: string): Promise<Quo
     next: { revalidate: 20 },
     headers: {
       Accept: "application/json",
-      "User-Agent": "QuantNode/1.0",
+      "User-Agent": "AlgorithmNode/1.0",
     },
   });
 

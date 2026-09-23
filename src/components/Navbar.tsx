@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { BrandMark } from "@/components/BrandMark";
 
 const links = [
   { href: "/#despre", label: "Despre noi" },
@@ -19,14 +20,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 font-medium tracking-tight">
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-accent font-mono text-xs text-white">
-            QN
-          </span>
-          <span>
-            Quant<span className="text-accent">Node</span>
-          </span>
-        </Link>
+        <BrandMark />
 
         <nav className="hidden items-center gap-7 text-sm md:flex">
           {links.map((link) => {

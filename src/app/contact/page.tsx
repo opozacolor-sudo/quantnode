@@ -3,7 +3,7 @@ import { ContactForm } from "@/components/ContactForm";
 import { SiteShell } from "@/components/SiteShell";
 
 export const metadata: Metadata = {
-  title: "Contact — QuantNode",
+  title: "Contact — AlgorithmNode",
   description: "Contact tehnic pentru acces la platformă, integrare API și întrebări despre permisiuni și risc.",
 };
 
@@ -27,8 +27,10 @@ export default function ContactPage() {
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-12 lg:py-16">
         <aside className="space-y-4 lg:col-span-4">
           <div className="rounded-xl border border-line bg-panel p-5">
-            <p className="text-xs tracking-wide text-muted uppercase">Email</p>
-            <p className="mt-2 font-mono text-sm">contact@quantnode.io</p>
+            <p className="text-xs tracking-wide text-muted uppercase">Acces</p>
+            <p className="mt-2 text-sm leading-6 text-muted">
+              Conturile se emit doar de administrator, după mesajul din formular.
+            </p>
           </div>
           <div className="rounded-xl border border-line bg-panel p-5">
             <p className="text-xs tracking-wide text-muted uppercase">Util</p>

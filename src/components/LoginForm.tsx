@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { isAdminSession, resolveLoginEmail } from "@/lib/admin";
 import { getSupabaseBrowser } from "@/lib/supabase-browser";
 
 export function LoginForm() {
@@ -13,7 +14,8 @@ export function LoginForm() {
     getSupabaseBrowser()
       .auth.getSession()
       .then(({ data }) => {
-        if (data.session) router.replace("/dashboard");
+        if (!data.session) return;
+        router.replace(isAdminSession(data.session.user) ? "/admin" : "/dashboard");
       });
   }, [router]);
 
@@ -23,14 +25,15 @@ export function LoginForm() {
     setError("");
 
     const form = event.currentTarget;
-    const email = String(new FormData(form).get("email") ?? "").trim();
+    const identifier = String(new FormData(form).get("email") ?? "").trim();
     const password = String(new FormData(form).get("password") ?? "");
+    const email = resolveLoginEmail(identifier);
     const supabase = getSupabaseBrowser();
 
     try {
-      const { error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
       if (loginError) throw loginError;
-      router.push("/dashboard");
+      router.push(isAdminSession(data.user) ? "/admin" : "/dashboard");
       router.refresh();
     } catch (caught) {
       setStatus("error");
@@ -42,15 +45,15 @@ export function LoginForm() {
     <form onSubmit={onSubmit} className="mt-8 space-y-4 rounded-xl border border-line bg-panel p-6">
       <div>
         <label className="mb-1.5 block text-xs text-muted" htmlFor="email">
-          Email
+          Utilizator sau email
         </label>
         <input
           id="email"
           name="email"
-          type="email"
+          type="text"
           required
-          autoComplete="email"
-          placeholder="nume@firma.com"
+          autoComplete="username"
+          placeholder="email sau utilizator"
           className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-accent/50"
         />
       </div>
@@ -75,7 +78,7 @@ export function LoginForm() {
       >
         {status === "sending" ? "Se procesează…" : "Intră în dashboard"}
       </button>
-      {error ? <p className="text-sm text-red-400">{error}</p> : null}
+      {error ? <p className="text-sm text-red-600">{error}</p> : null}
     </form>
   );
 }

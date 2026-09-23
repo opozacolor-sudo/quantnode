@@ -43,8 +43,8 @@ export function Hero() {
         </h1>
 
         <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
-          QuantNode execută pe crypto, mărfuri, acțiuni și valute — Bitcoin, Ethereum, aur/USD, petrol și
-          mai multe perechi FX. Capitalul rămâne la brokerul dumneavoastră. Controlul se face prin API.
+          AlgorithmNode execută automat, prin agenți care citesc piața la microsecunde și boți care
+          urmăresc factorii de preț pe crypto, aur/USD, petrol, acțiuni, mărfuri și valute.
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
