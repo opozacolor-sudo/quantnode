@@ -6,7 +6,7 @@ export function About() {
   const { t } = useI18n();
 
   return (
-    <section id="despre" className="scroll-mt-20 border-t border-line">
+    <section id="a-propos" className="scroll-mt-20 border-t border-line">
       <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <p className="text-xs tracking-wide text-accent uppercase">{t("about.kicker")}</p>

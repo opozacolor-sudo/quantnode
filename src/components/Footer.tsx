@@ -15,10 +15,10 @@ export function Footer() {
             <BrandMark />
             <p className="mt-3 text-sm text-muted">{t("footer.tagline")}</p>
             <nav className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted">
-              <Link href="/cum-functioneaza" className="hover:text-foreground">
+              <Link href="/comment-ca-marche" className="hover:text-foreground">
                 {t("nav.how")}
               </Link>
-              <Link href="/istoric" className="hover:text-foreground">
+              <Link href="/historique" className="hover:text-foreground">
                 {t("nav.history")}
               </Link>
               <Link href="/contact" className="hover:text-foreground">

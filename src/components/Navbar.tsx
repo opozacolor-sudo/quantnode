@@ -13,10 +13,10 @@ export function Navbar() {
   const { t } = useI18n();
 
   const links = [
-    { href: "/#despre", key: "nav.about" },
-    { href: "/cum-functioneaza", key: "nav.how" },
-    { href: "/istoric", key: "nav.history" },
-    { href: "/#preturi", key: "nav.prices" },
+    { href: "/#a-propos", key: "nav.about" },
+    { href: "/comment-ca-marche", key: "nav.how" },
+    { href: "/historique", key: "nav.history" },
+    { href: "/#prix", key: "nav.prices" },
     { href: "/contact", key: "nav.contact" },
   ];
 

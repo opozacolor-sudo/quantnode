@@ -59,7 +59,7 @@ export function LivePrices() {
   }, []);
 
   return (
-    <section id="preturi" className="scroll-mt-20 border-t border-line">
+    <section id="prix" className="scroll-mt-20 border-t border-line">
       <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
