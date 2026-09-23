@@ -12,10 +12,23 @@ const ERROR_KEYS: Record<string, string> = {
   save_failed: "form.errSave",
 };
 
-export function ContactForm() {
+type ContactFormProps = {
+  defaultEmail?: string;
+  defaultMessage?: string;
+  idPrefix?: string;
+  variant?: "page" | "embedded";
+};
+
+export function ContactForm({
+  defaultEmail = "",
+  defaultMessage = "",
+  idPrefix = "",
+  variant = "page",
+}: ContactFormProps) {
   const { t } = useI18n();
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
   const [error, setError] = useState("");
+  const fid = (name: string) => `${idPrefix}${name}`;
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,19 +65,24 @@ export function ContactForm() {
     }
   }
 
+  const shell =
+    variant === "embedded"
+      ? "space-y-4"
+      : "space-y-4 rounded-xl border border-line bg-panel p-6 sm:p-8";
+
   return (
-    <form onSubmit={onSubmit} className="space-y-4 rounded-xl border border-line bg-panel p-6 sm:p-8">
+    <form key={`${defaultEmail}|${defaultMessage}`} onSubmit={onSubmit} className={shell}>
       <div className="hidden">
-        <label htmlFor="company">Company</label>
-        <input id="company" name="company" tabIndex={-1} autoComplete="off" />
+        <label htmlFor={fid("company")}>Company</label>
+        <input id={fid("company")} name="company" tabIndex={-1} autoComplete="off" />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className="mb-1.5 block text-xs text-muted">
+          <label htmlFor={fid("name")} className="mb-1.5 block text-xs text-muted">
             {t("form.name")}
           </label>
           <input
-            id="name"
+            id={fid("name")}
             name="name"
             required
             minLength={2}
@@ -73,24 +91,25 @@ export function ContactForm() {
           />
         </div>
         <div>
-          <label htmlFor="email" className="mb-1.5 block text-xs text-muted">
+          <label htmlFor={fid("email")} className="mb-1.5 block text-xs text-muted">
             {t("form.email")}
           </label>
           <input
-            id="email"
+            id={fid("email")}
             name="email"
             type="email"
             required
+            defaultValue={defaultEmail}
             className="w-full rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none focus:border-accent/50"
           />
         </div>
       </div>
       <div>
-        <label htmlFor="phone" className="mb-1.5 block text-xs text-muted">
+        <label htmlFor={fid("phone")} className="mb-1.5 block text-xs text-muted">
           {t("form.phone")}
         </label>
         <input
-          id="phone"
+          id={fid("phone")}
           name="phone"
           type="tel"
           required
@@ -102,16 +121,17 @@ export function ContactForm() {
         />
       </div>
       <div>
-        <label htmlFor="message" className="mb-1.5 block text-xs text-muted">
+        <label htmlFor={fid("message")} className="mb-1.5 block text-xs text-muted">
           {t("form.message")}
         </label>
         <textarea
-          id="message"
+          id={fid("message")}
           name="message"
           required
           minLength={10}
           maxLength={5000}
           rows={7}
+          defaultValue={defaultMessage}
           placeholder={t("form.msgPh")}
           className="w-full resize-y rounded-md border border-line bg-background px-3 py-2.5 text-sm outline-none placeholder:text-muted/60 focus:border-accent/50"
         />

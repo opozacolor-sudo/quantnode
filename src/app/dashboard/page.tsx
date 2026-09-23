@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BrandMark } from "@/components/BrandMark";
+import { ContactForm } from "@/components/ContactForm";
 import { isAdminSession } from "@/lib/admin";
 import { getSupabaseBrowser } from "@/lib/supabase-browser";
 
@@ -44,6 +45,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [depositConsult, setDepositConsult] = useState<{ amount: number } | null>(null);
 
   const load = useCallback(async () => {
     const supabase = getSupabaseBrowser();
@@ -93,24 +95,40 @@ export default function DashboardPage() {
     load();
   }, [load]);
 
-  async function onMove(type: "deposit" | "withdraw", event: FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    if (!depositConsult) return;
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") setDepositConsult(null);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [depositConsult]);
+
+  function onDepositIntent(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+    setMessage("");
+    const amount = Number(new FormData(event.currentTarget).get("amount"));
+    if (!Number.isFinite(amount) || amount < 10) {
+      setError("Suma minimă pentru discuția de depunere este 10 EUR.");
+      return;
+    }
+    setDepositConsult({ amount });
+  }
+
+  async function onWithdraw(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
     setMessage("");
     const amount = Number(new FormData(event.currentTarget).get("amount"));
     const supabase = getSupabaseBrowser();
-    const fn = type === "deposit" ? "deposit_funds" : "withdraw_funds";
-    const { error: rpcError } = await supabase.rpc(fn, { p_amount: amount });
+    const { error: rpcError } = await supabase.rpc("withdraw_funds", { p_amount: amount });
     if (rpcError) {
       setError(rpcError.message);
       return;
     }
     event.currentTarget.reset();
-    setMessage(
-      type === "deposit"
-        ? "Cererea de depunere a fost înregistrată. Soldul se actualizează după confirmare."
-        : "Cererea de retragere a fost înregistrată. Procesare în maxim 24 de ore.",
-    );
+    setMessage("Cererea de retragere a fost înregistrată. Procesare în maxim 24 de ore.");
     await load();
   }
 
@@ -197,9 +215,12 @@ export default function DashboardPage() {
         </section>
 
         <section className="grid gap-4 lg:grid-cols-2">
-          <form onSubmit={(event) => onMove("deposit", event)} className="rounded-xl border border-line bg-panel p-6">
+          <form onSubmit={onDepositIntent} className="rounded-xl border border-line bg-panel p-6">
             <h2 className="text-lg font-medium">Depunere</h2>
-            <p className="mt-1 text-sm text-muted">Trimite o cerere de depunere în EUR. Soldul crește doar după confirmare.</p>
+            <p className="mt-1 text-sm text-muted">
+              Nu se depune automat. Apasă Depune ca să deschizi formularul de contact: un consultant îți explică exact ce
+              înseamnă și cum procedezi. Soldul crește doar după confirmare.
+            </p>
             <label className="mt-4 mb-1.5 block text-xs text-muted" htmlFor="deposit-amount">
               Sumă
             </label>
@@ -217,7 +238,7 @@ export default function DashboardPage() {
             </button>
           </form>
 
-          <form onSubmit={(event) => onMove("withdraw", event)} className="rounded-xl border border-line bg-panel p-6">
+          <form onSubmit={onWithdraw} className="rounded-xl border border-line bg-panel p-6">
             <h2 className="text-lg font-medium">Retragere</h2>
             <p className="mt-1 text-sm text-muted">
               În contul tău, procesare în maxim 24 de ore. Retragerea este posibilă doar dacă nu există tranzacții deschise.
@@ -329,6 +350,50 @@ export default function DashboardPage() {
           </div>
         </section>
       </main>
+
+      {depositConsult ? (
+        <div
+          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4 sm:items-center"
+          role="presentation"
+          onClick={() => setDepositConsult(null)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="deposit-consult-title"
+            className="my-6 w-full max-w-lg rounded-xl border border-line bg-background p-6 shadow-xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs tracking-wide text-accent uppercase">Depunere</p>
+                <h2 id="deposit-consult-title" className="mt-1 text-lg font-medium">
+                  Discuție cu un consultant
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setDepositConsult(null)}
+                className="rounded-full border border-line px-3 py-1 text-sm text-muted hover:text-foreground"
+              >
+                Închide
+              </button>
+            </div>
+            <p className="mt-2 text-sm text-muted">
+              Soldul nu se modifică acum. Un consultant te contactează ca să înțelegi exact ce înseamnă depunerea de{" "}
+              <span className="font-mono text-foreground">{money(depositConsult.amount)}</span> și care sunt pașii următori.
+            </p>
+            <div className="mt-5">
+              <ContactForm
+                variant="embedded"
+                idPrefix="deposit-"
+                defaultEmail={email}
+                defaultMessage={`Solicitare depunere: ${money(depositConsult.amount)}. Doresc să discut cu un consultant despre ce înseamnă depunerea, riscurile și pașii următori. Cont: ${email}.`}
+              />
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
