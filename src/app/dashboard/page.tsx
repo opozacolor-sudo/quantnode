@@ -219,7 +219,9 @@ export default function DashboardPage() {
 
           <form onSubmit={(event) => onMove("withdraw", event)} className="rounded-xl border border-line bg-panel p-6">
             <h2 className="text-lg font-medium">Retragere</h2>
-            <p className="mt-1 text-sm text-muted">În contul tău, procesare în maxim 24 de ore.</p>
+            <p className="mt-1 text-sm text-muted">
+              În contul tău, procesare în maxim 24 de ore. Retragerea este posibilă doar dacă nu există tranzacții deschise.
+            </p>
             <label className="mt-4 mb-1.5 block text-xs text-muted" htmlFor="withdraw-amount">
               Sumă
             </label>
